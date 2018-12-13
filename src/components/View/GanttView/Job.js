@@ -36,7 +36,7 @@ const Job = props => {
                 title: "Job properties"
             })
             }
-            onClick={() => props.onClick({jobId:id, viewId:viewId})}
+            onClick={(e) => props.onClick({jobId:id, viewId:viewId, withCtrlKey:e.ctrlKey})}
             className="job-container"
             style={style}
             >
