@@ -21,11 +21,6 @@ const Job = props => {
         style,
         id
     } = props;
-    // const topToolTip = {
-    //     borderWidth: "5px",
-    //     borderStyle: "solid",
-    //     borderColor:  " #555 transparent transparent transparent",
-    // }
     const expandedProps = Object.assign(additionalParams, {
         startTime: startTime.toLocaleString(),
         endTime: endTime.toLocaleString()
@@ -48,11 +43,6 @@ const Job = props => {
                 style={{
                     backgroundColor: additionalParams.orderColor
                 }}>
-                {/* <div className="tooltiptext bottom-tooltip">
-                    <div>Start time: {startTime.toLocaleString()}</div>
-                    <div>End time: {endTime.toLocaleString()}</div>
-                </div>
-                 */}
             </div>
             
             </div>
