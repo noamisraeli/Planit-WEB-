@@ -1,5 +1,5 @@
 import React from 'react';
-import { JOB_DRAG_START, JOB_CHOSEN, OPEN_MODAL} from '../../../constants/actionTypes';
+import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL} from '../../../constants/actionTypes';
 import {connect} from 'react-redux';
 import {JobPropTypes} from '../../WorkSpace/propTyps';
 
@@ -7,7 +7,7 @@ const mapDispatchToProps = dispatch => ({
     dragStart: payload =>
         dispatch({ type: JOB_DRAG_START, payload}),
     onClick: jobId =>
-        dispatch({type: JOB_CHOSEN, jobId}),
+        dispatch({type: JOB_SELECT, jobId}),
     openModal: payload => 
         dispatch({type: OPEN_MODAL, payload})
 })

@@ -20,7 +20,7 @@ export const QUEUE_FILTER_NAME_CHANGE = 'QUEUE_FILTER_NAME_CHANGE';
 
 export const JOB_DRAG_START = 'JOB_DRAG_START';
 export const JOB_DROP = 'JOB_DROP';
-export const JOB_CHOSEN = 'JOB_CHOSEN';
+export const JOB_SELECT = 'JOB_SELECT';
 
 export const DATABASE_LOADED = 'DATABASE_LOADED';
 export const DATABASE_UNLOADED = 'DATABASE_UNLOADED';
