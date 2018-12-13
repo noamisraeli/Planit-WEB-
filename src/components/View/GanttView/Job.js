@@ -6,8 +6,8 @@ import {JobPropTypes} from '../../WorkSpace/propTyps';
 const mapDispatchToProps = dispatch => ({
     dragStart: payload =>
         dispatch({ type: JOB_DRAG_START, payload}),
-    onClick: jobId =>
-        dispatch({type: JOB_SELECT, jobId}),
+    onClick: payload =>
+        dispatch({type: JOB_SELECT, payload}),
     openModal: payload => 
         dispatch({type: OPEN_MODAL, payload})
 })
@@ -19,7 +19,8 @@ const Job = props => {
         startTime,
         endTime,
         style,
-        id
+        id,
+        viewId
     } = props;
     const expandedProps = Object.assign(additionalParams, {
         startTime: startTime.toLocaleString(),
@@ -35,7 +36,7 @@ const Job = props => {
                 title: "Job properties"
             })
             }
-            
+            onClick={() => props.onClick({jobId:id, viewId:viewId})}
             className="job-container"
             style={style}
             >

@@ -112,6 +112,7 @@ class GanttView extends React.Component {
                             <Queue
                              key={index}
                             id={queue.id}
+                            viewId={this.props.id}
                             jobs={queueJobs}
                             numberOfParallelJobs={queue.numberOfParallelJobs}
                             jobTypesAllowed={queue.jobTypesAllowed}

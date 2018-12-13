@@ -11,7 +11,8 @@ const Queue = props => {
         jobs,
         startTime,
         endTime,
-        hourAsPixel
+        hourAsPixel,
+        viewId
     } = props;
     const width = getHourAsPixels(endTime, startTime, hourAsPixel);
     let initialTime = startTime;
@@ -38,6 +39,7 @@ const Queue = props => {
                         key={index}
                         startTime={job.startTime}
                         endTime={job.endTime}       
+                        viewId={viewId}
                         dependencies={job.dependencies}
                         additionalParams={job.additionalParams}
                         style={jobStyle}
