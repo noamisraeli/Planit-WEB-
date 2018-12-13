@@ -1,0 +1,89 @@
+.view-container {
+    float: left;
+    transition: 0.1s;
+    overflow: hidden;
+}
+
+.view-splitter {
+    float: left;
+    height: 100%;
+    background-color: #36383f;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    border-right: 1px solid rgba(0,0,0,0.4);
+    position: relative;
+    
+}
+
+.view-splitter-title {
+    transition: transform 0.2s, -webkit-transform 0.2s;
+    transform-origin: left center;
+    left: 33px;
+    top: 7px;
+    z-index: 2;
+    color: antiquewhite;
+    position: absolute;
+    font-size: 15px;
+    transform: translate(-24px, -11px) rotate(90deg) scale(0.8);
+}
+
+.view-content {
+    height: 100%;
+    background-color: #1D1E22;
+
+}
+
+.view-header{
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    height: 30px;
+    overflow: hidden;
+}
+
+.gantt-container {
+    height: 100%;
+}
+.gantt-view-gantt {
+    overflow-x: scroll;
+    height: 100%;
+    position: relative;
+    float: left;
+    background-color: #1D1E22;
+}
+
+
+
+
+.queue {
+    min-height: 30px;
+    padding: 6px 0;
+    height: 40px;
+    min-width: 100%;
+    border: 1px solid rgb(56, 54, 54);
+
+}
+
+.queue-name {
+    z-index: 12;
+    position: absolute;
+    left: 2px;
+    height: 40px;
+    padding: 6px;
+    min-width: 80px;
+    max-width: 25%;
+    
+
+}
+
+.job-container {
+    display: inline-block;
+    height: 100%;
+}
+
+.job {
+    border: 1px solid black;
+    border-radius: 2px;
+    height: inherit;
+    display: inline-block;
+    position: relative;
+    min-width: 15px;
+    width: 100%;
+}

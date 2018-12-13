@@ -1,0 +1,163 @@
+import {
+    WORKSPACE_LOADED, 
+    WORKSPACE_UNLOADED,
+    ASYNC_START,
+    OPEN_MODAL,
+    CLOSE_MODAL,
+    SCROLL_CHANGED,
+    RESOLUTION_CHANGED,
+    SPLITTER_DRAG_END,
+    SPLITTER_DRAG_START,
+    SPLITTER_DRAG,
+    SPLITTER_DOUBLE_CLICKED,
+    WORKSPACE_MOUNTED,
+    QUEUE_FILTER_NAME_CHANGE,
+    GO_TO_FIRST_JOB,
+    GO_TO_LAST_JOB
+
+    
+} from '../constants/actionTypes';
+
+
+export default (state={}, action) =>{
+    switch(action.type){
+        case WORKSPACE_UNLOADED:
+            return {}
+        case WORKSPACE_LOADED:
+            return {
+                startTime: action.payload[0].startTime,
+                endTime: action.payload[0].endTime,
+                views: action.payload[0].views,
+                splitter: {
+                    isDragged: false
+                },
+                modal: {
+                    isOpen: false
+                }
+            }
+        case WORKSPACE_MOUNTED:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case OPEN_MODAL:
+            return {
+                ...state,
+                modal:{
+                    isOpen: true,
+                    content: action.payload.content,
+                    type: action.payload.type,
+                    id:action.payload.id
+                }
+            }
+        case CLOSE_MODAL:
+            return {
+                ...state,
+                modal:{
+                    isOpen: false
+                }
+            }
+        case QUEUE_FILTER_NAME_CHANGE:
+            return {
+                ...state,
+                views: state.views.map(view => {
+                    if(view.id === action.payload.viewId){
+                        view.filters.freeTextFilter = action.payload.newValue
+                    }
+                    return view
+                })
+            }
+        case SCROLL_CHANGED:
+            return {
+                views: state.views.map((view) => {
+                    if (view.id === action.payload.viewId){
+                        view.startTimeView = action.payload.newState
+                    }
+                    return view
+                }
+                ),
+                ...state
+            }
+        case RESOLUTION_CHANGED:
+            return {
+                    views: state.views.map(view => {
+                        if (view.id === action.payload.viewId){
+                            view.sizes.hourAsPixel =  view.sizes.hourAsPixel - action.payload.diff
+                        }
+                        return view
+                    }),
+                ...state
+            }
+        case SPLITTER_DRAG_START:
+            return {
+                ...state,
+                splitter: {
+                    isDragged: true,
+                    startPosition: action.payload.startPosition,
+                    firstWidth: action.payload.firstViewWidth,
+                    secondWidth: action.payload.secondViewWidth,
+                    firstIndex: action.payload.firstIndex,
+                    secondIndex: action.payload.secondIndex, 
+                }
+            }
+        case SPLITTER_DRAG:
+            return {
+                ...state, 
+                views: state.views.map((view, index) => {
+                    if(index === action.payload.firstIndex){
+                        view.sizes.widthPercent = action.payload.firstNewWidth
+                    }
+                    if(index === action.payload.secondIndex){
+                        view.sizes.widthPercent = action.payload.secondNewWidth
+                    }
+                    return view
+                })
+            }
+        case SPLITTER_DRAG_END:
+            return {
+                ...state,
+                splitter : {
+                    isDragged: false
+                }
+            }
+        case SPLITTER_DOUBLE_CLICKED:
+            return {
+                ...state,
+                views : state.views.map((view,index) => {
+                    if(index !== action.payload.secondIndex){
+                        view.sizes.width = 0
+                    }
+                    return view
+
+                })
+                
+            }
+        case GO_TO_FIRST_JOB:
+            return {
+                ...state, 
+                views: state.views.map((view) => {
+                    if(view.id === action.payload.viewId){
+                        view.startTimeView = action.payload.firstJob.startTime
+                    }
+                    return view
+                })
+            }
+        case GO_TO_LAST_JOB: 
+            return {
+                ...state,
+                views: state.views.map((view) => {
+                    if(view.id === action.payload.viewId){
+                        view.startTimeView = action.payload.lastJob.startTime
+                    }
+                    return view
+                })
+            }
+        case ASYNC_START:
+            return {
+              ...state,
+              inProgress: true
+            };
+        default:
+            return state
+    }
+}
