@@ -79,7 +79,7 @@ class GanttView extends React.Component {
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container" 
+                <div className="gantt-container"
                     >
                     <div style={{
                         ...queueHeadersStyle,
@@ -96,8 +96,7 @@ class GanttView extends React.Component {
                                 </div>
                             )
                         })
-                    } </div>    
-                    
+                    } </div>                  
                     <div 
                         className="gantt-view-gantt"
                         style={{
