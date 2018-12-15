@@ -30,6 +30,7 @@ export const queueHeaderStyle = {
     padding: "10px 0",
     borderBottom: "1px solid rgb(56, 54, 54)",
     borderRight: "1px solid rgb(56, 54, 54)",
+    fontWeight: 600
 }
 
 
