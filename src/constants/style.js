@@ -46,5 +46,6 @@ export const operatorStyle = {
     display:"inline-block", 
     padding: 3,
     cursor:"pointer",
-    color: "#939a9f"
+    color: "#dfdfdf",
+    height: "100%"
 }
