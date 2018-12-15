@@ -73,14 +73,12 @@ class GanttView extends React.Component {
         else{
             this.handleScroll(e)
         }
-        
     }
 
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container"
-                    >
+                <div className="gantt-container">
                     <div style={{
                         ...queueHeadersStyle,
                         color: "white"
@@ -92,7 +90,7 @@ class GanttView extends React.Component {
                                     ...queueHeaderStyle
                                 }}
                                 key={index}>
-                                    {queue.additionalParams.title}
+                                {queue.additionalParams.title}
                                 </div>
                             )
                         })
@@ -125,9 +123,7 @@ class GanttView extends React.Component {
                     }     
                 )}
                 </div>
-                </div> 
-               
-            
+            </div>  
         )
     }
     return null
