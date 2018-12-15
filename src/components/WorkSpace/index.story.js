@@ -10,13 +10,12 @@ const jobs = [
             nextJob: 2,
 
         },
-        
         additionalParams: {
-            
             description: "JOBJOB",
             quantity: 213,
             order: 123,
-            orderColor: "lightblue"
+            orderColor: "lightblue",
+            bgColor: null
         },
         startTime: new Date(2018, 10, 28, 3),
         endTime: new Date(2018, 10, 28, 4, 30)
@@ -32,8 +31,8 @@ const jobs = [
             description: "JOBJOB",
             quantity: 213,
             order: 123,
-            orderColor: "lightblue"
-
+            orderColor: "lightblue",
+            bgColor: null
         },
         startTime: new Date(2018, 10, 28, 5),
         endTime: new Date(2018, 10, 28, 5, 30)
@@ -49,8 +48,8 @@ const jobs = [
             description: "JOBJOB",
             quantity: 213,
             order: 123,
-            orderColor: "red"
-
+            orderColor: "red",
+            bgColor: null
         },
         startTime: new Date(2018, 10, 28, 6),
         endTime: new Date(2018, 10, 28, 7)
@@ -66,12 +65,12 @@ const jobs = [
             description: "JOBJOB",
             quantity: 213,
             order: 123,
-            orderColor: "red"
+            orderColor: "red",
+            bgColor: null
         },
         startTime: new Date(2018, 10, 28, 8),
         endTime: new Date(2018, 10, 28, 10)
     }
-
 ]
 
 const queues = [
@@ -124,6 +123,7 @@ const viewState = {
             id: 1,
             type: GANTT_VIEW,
             startTimeView: new Date(2018, 10, 28, 1),
+            selectedJobs: [],
             sizes: {
                 widthPercent: 47,
                 height: "100%",
@@ -146,6 +146,7 @@ const viewState = {
             id: 2,
             type: GANTT_VIEW,
             startTimeView: new Date(2018, 10, 28, 1),
+            selectedJobs: [],
             sizes: {
                 widthPercent: 50,
                 height: "100%",
