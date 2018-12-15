@@ -43,7 +43,6 @@ export const selectedJobStyle = {
 }
 
 export const operatorStyle = {
-    display:"inline-block", 
     padding: 3,
     cursor:"pointer",
     color: "#dfdfdf",

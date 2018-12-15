@@ -85,10 +85,12 @@ class View extends React.Component {
                 <div className="view-header">
                 </div>
                 <div className="view-header">
+                    <div style={{float:"left", height:"100%", paddingLeft:5}}>
                     <input 
                             onChange={this.onFreeTextInputChange}
                             placeholder="Queue name filter..."
                             value={this.props.freeTextFilter}/>
+                    </div>
                     {this.props.operators.map((operator, index) => {
                         return (
                             <Operator
