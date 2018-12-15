@@ -42,7 +42,7 @@ const Job = props => {
             >
             <div className="job"
                 style={{
-                    backgroundColor: additionalParams.orderColor
+                    backgroundColor: additionalParams.bgColor
                 }}>
             </div>
             
