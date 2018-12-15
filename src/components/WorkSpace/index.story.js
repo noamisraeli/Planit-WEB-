@@ -2,7 +2,6 @@ import {GANTT_VIEW} from '../../constants/viewTypes'
 import { GO_TO_LAST_JOB, GO_TO_FIRST_JOB } from '../../constants/actionTypes';
 
 const jobs = [
-    
     {
         id : 1,
         dependencies: {
@@ -140,7 +139,22 @@ const viewState = {
                     orderId: 13
                 }
             },
-    
+            operators: [
+                {
+                    type: "icon",
+                    name:"fast_forward", 
+                    position:"right", 
+                    title:"Go to last job",
+                    action: GO_TO_LAST_JOB
+                },
+                {
+                    type: "icon",
+                    name:"fast_rewind", 
+                    position:"right", 
+                    title:"Go to first job", 
+                    action: GO_TO_FIRST_JOB
+                }
+            ]
         },
         
         {
@@ -180,8 +194,6 @@ const viewState = {
                     action: GO_TO_FIRST_JOB
                 }
             ]
-    
         }
-
 ]}
 export {queues, jobs, viewState}
