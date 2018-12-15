@@ -15,7 +15,7 @@ const Operator = props => {
             }}
             title={props.title} 
             onClick={e => props.onClick({viewId:props.viewId, ...props.additionalParams})}>
-            <i className="material-icons">{props.type}</i>
+            <i className="material-icons">{props.name}</i>
         </div>
     )
 }
