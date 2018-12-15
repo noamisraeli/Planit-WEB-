@@ -2,6 +2,7 @@
     float: left;
     transition: 0.1s;
     overflow: hidden;
+    font-family: "Segoe UI" ,Arial,sans-serif
 }
 
 .view-splitter {
@@ -24,6 +25,7 @@
     position: absolute;
     font-size: 15px;
     transform: translate(-24px, -11px) rotate(90deg) scale(0.8);
+    font-family: "Segoe UI" ,Arial,sans-serif
 }
 
 .view-content {
@@ -87,16 +89,26 @@
 
 ::-webkit-scrollbar {
     width: 10px;
-  }
+}
   
-  ::-webkit-scrollbar-track {
-    background: #b6aeae; 
-  }
+::-webkit-scrollbar-track {
+    background: #dfdfdf; 
+}
    
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #888;
-  }
+}
   
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: rgb(131, 128, 128); 
-  }
+}
+
+input {
+    border-radius: 4px;
+    border: 0px;
+    background-color: #dfdfdf;
+}
+
+input:focus {
+    outline: none
+}
