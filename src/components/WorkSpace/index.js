@@ -58,7 +58,7 @@ class WorkSpace extends Component {
 
 	onMouseUp = e => {
 		e.preventDefault()
-		if (e.target.className === "view-splitter"){
+		if (this.props.splitter.isDragged){
 			this.props.onSplitterUnCkicked()
 		}
 	}
