@@ -45,3 +45,9 @@ export const viewHeaderStyle = {
 export const selectedJobStyle = {
     backgroundColor: "gray"
 }
+
+export const operatorStyle = {
+    display:"inline-block", 
+    padding: 3,
+    cursor:"pointer"
+}
