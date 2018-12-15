@@ -14,15 +14,13 @@ export const queueStyle = {
     borderBottom: "1px solid rgb(56, 54, 54)"
 }
 
-
 export const queueHeadersStyle = {
     float: "left",
     width: 100,
     height: "100%",
     backgroundColor: "#555",
-    overflowX: "hidden"
+    overflowX: "hidden",
 }
-
 
 export const queueHeaderStyle = {
     textAlign: "center",
@@ -31,7 +29,6 @@ export const queueHeaderStyle = {
     borderRight: "1px solid rgb(56, 54, 54)",
     fontWeight: 600
 }
-
 
 export const ganttStyle = {
     width: "calc(" + 100 + "% - " + queueHeadersStyle.width + "px)"
