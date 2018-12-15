@@ -1,13 +1,13 @@
 import React from 'react';
-import { JOB_DRAG_START, JOB_CHOSEN, OPEN_MODAL} from '../../../constants/actionTypes';
+import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL} from '../../../constants/actionTypes';
 import {connect} from 'react-redux';
 import {JobPropTypes} from '../../WorkSpace/propTyps';
 
 const mapDispatchToProps = dispatch => ({
     dragStart: payload =>
         dispatch({ type: JOB_DRAG_START, payload}),
-    onClick: jobId =>
-        dispatch({type: JOB_CHOSEN, jobId}),
+    onClick: payload =>
+        dispatch({type: JOB_SELECT, payload}),
     openModal: payload => 
         dispatch({type: OPEN_MODAL, payload})
 })
@@ -19,13 +19,9 @@ const Job = props => {
         startTime,
         endTime,
         style,
-        id
+        id,
+        viewId
     } = props;
-    // const topToolTip = {
-    //     borderWidth: "5px",
-    //     borderStyle: "solid",
-    //     borderColor:  " #555 transparent transparent transparent",
-    // }
     const expandedProps = Object.assign(additionalParams, {
         startTime: startTime.toLocaleString(),
         endTime: endTime.toLocaleString()
@@ -40,19 +36,14 @@ const Job = props => {
                 title: "Job properties"
             })
             }
-            
+            onClick={(e) => props.onClick({jobId:id, viewId:viewId, withCtrlKey:e.ctrlKey})}
             className="job-container"
             style={style}
             >
             <div className="job"
                 style={{
-                    backgroundColor: additionalParams.orderColor
+                    backgroundColor: additionalParams.bgColor
                 }}>
-                {/* <div className="tooltiptext bottom-tooltip">
-                    <div>Start time: {startTime.toLocaleString()}</div>
-                    <div>End time: {endTime.toLocaleString()}</div>
-                </div>
-                 */}
             </div>
             
             </div>

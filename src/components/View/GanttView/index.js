@@ -17,7 +17,8 @@ const mapStateToProps = (state, ownProps) => ({
     endTime: state.workspace.endTime,
     hourAsPixel: state.workspace.views[ownProps.index].sizes.hourAsPixel,
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
-    freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter
+    freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
+    selectedJobs: state.workspace.views[ownProps.index].selectedJobs
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -78,7 +79,7 @@ class GanttView extends React.Component {
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container" 
+                <div className="gantt-container"
                     >
                     <div style={{
                         ...queueHeadersStyle,
@@ -95,8 +96,7 @@ class GanttView extends React.Component {
                                 </div>
                             )
                         })
-                    } </div>    
-                    
+                    } </div>                  
                     <div 
                         className="gantt-view-gantt"
                         style={{
@@ -110,15 +110,17 @@ class GanttView extends React.Component {
                     const queueJobs = this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id})
                         return (
                             <Queue
-                             key={index}
+                            key={index}
                             id={queue.id}
+                            viewId={this.props.id}
                             jobs={queueJobs}
                             numberOfParallelJobs={queue.numberOfParallelJobs}
                             jobTypesAllowed={queue.jobTypesAllowed}
                             additionalParams={queue.additionalParams}
                             hourAsPixel={this.props.hourAsPixel}
                             startTime={this.props.startTime}
-                            endTime={this.props.endTime} />
+                            endTime={this.props.endTime}
+                            selectedJobs={this.props.selectedJobs} />
                             )
                     }     
                 )}

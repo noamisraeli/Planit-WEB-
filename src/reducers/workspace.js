@@ -13,7 +13,8 @@ import {
     WORKSPACE_MOUNTED,
     QUEUE_FILTER_NAME_CHANGE,
     GO_TO_FIRST_JOB,
-    GO_TO_LAST_JOB
+    GO_TO_LAST_JOB,
+    JOB_SELECT
 
     
 } from '../constants/actionTypes';
@@ -39,6 +40,32 @@ export default (state={}, action) =>{
             return {
                 ...state,
                 ...action.payload
+            }
+        case JOB_SELECT:
+            return {
+                ...state,
+                views: state.views.map(view => {
+                
+                    if (view.id === action.payload.viewId){
+                        if (action.payload.withCtrlKey){
+                            if (view.selectedJobs.includes(action.payload.jobId)){
+                                view.selectedJobs = view.selectedJobs.filter(jobId => {return jobId !== action.payload.jobId})
+                            }
+                            else {
+                                view.selectedJobs = view.selectedJobs.concat(action.payload.jobId)
+                            }
+                        }
+                        else {
+                            if(view.selectedJobs.includes(action.payload.jobId)){
+                                view.selectedJobs = []
+                            }
+                            else {
+                                view.selectedJobs = [action.payload.jobId]
+                            }
+                        }
+                    }
+                    return view 
+                })
             }
         case OPEN_MODAL:
             return {

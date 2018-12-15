@@ -40,3 +40,7 @@ export const ganttStyle = {
 export const viewHeaderStyle = {
     height: 30
 }
+
+export const selectedJobStyle = {
+    backgroundColor: "gray"
+}
