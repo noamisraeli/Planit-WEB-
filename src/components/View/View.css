@@ -2,6 +2,7 @@
     float: left;
     transition: 0.1s;
     overflow: hidden;
+    font-family: "Segoe UI" ,Arial,sans-serif
 }
 
 .view-splitter {
@@ -24,6 +25,7 @@
     position: absolute;
     font-size: 15px;
     transform: translate(-24px, -11px) rotate(90deg) scale(0.8);
+    font-family: "Segoe UI" ,Arial,sans-serif
 }
 
 .view-content {
@@ -49,9 +51,6 @@
     background-color: #1D1E22;
 }
 
-
-
-
 .queue {
     min-height: 30px;
     padding: 6px 0;
@@ -69,8 +68,6 @@
     padding: 6px;
     min-width: 80px;
     max-width: 25%;
-    
-
 }
 
 .job-container {
@@ -80,10 +77,41 @@
 
 .job {
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 4px;
     height: inherit;
     display: inline-block;
     position: relative;
     min-width: 15px;
     width: 100%;
+    box-shadow: 2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    cursor: pointer
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #dfdfdf; 
+}
+   
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(131, 128, 128); 
+}
+
+input {
+    border-radius: 4px;
+    border: 0px;
+    background-color: inherit;
+    padding-left: 2px;
+    border-bottom: 1px solid #36383f;
+    color: white;
+}
+
+input:focus {
+    outline: none;
 }

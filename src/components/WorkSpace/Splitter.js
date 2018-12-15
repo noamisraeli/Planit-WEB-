@@ -69,7 +69,6 @@ const Splitter = props => {
                     width: splitterWidth
                 }
             }>
-            
             <h2 className="view-splitter-title"
                 style={{
                     transform:transform

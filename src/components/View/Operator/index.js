@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { operatorStyle } from '../../../constants/style';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick : payload => 
@@ -8,13 +9,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const Operator = props => {
     return (
         <div className="view-operator" 
-            style={{display:"inline-block", 
-                    float:props.position,
-                    padding: 3,
-                cursor:"pointer"}}
+            style={{
+                float:props.position,
+                ...operatorStyle
+            }}
             title={props.title} 
             onClick={e => props.onClick({viewId:props.viewId, ...props.additionalParams})}>
-            <i className="material-icons">{props.type}</i>
+            <i className="material-icons">{props.name}</i>
         </div>
     )
 }

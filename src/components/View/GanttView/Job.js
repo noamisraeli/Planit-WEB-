@@ -28,7 +28,7 @@ const Job = props => {
     })
     return (
         <div
-            title={expandedProps.startTime + "-" + expandedProps.endTime}
+            title={"Start time: " + expandedProps.startTime + "\n End time: " + expandedProps.endTime}
             onDoubleClick={() => props.openModal({
                 content: expandedProps,
                 type: "job",
