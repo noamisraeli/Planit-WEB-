@@ -8,7 +8,6 @@ export const splitterTitleHorizontal = "translate(-24px, -11px) rotate(90deg) sc
 export const splitterWidth = 20;
 
 export const queueStyle = {
-    
     padding: "6px 0",
     height: 40,
     minWidth: "100%",
@@ -49,5 +48,6 @@ export const selectedJobStyle = {
 export const operatorStyle = {
     display:"inline-block", 
     padding: 3,
-    cursor:"pointer"
+    cursor:"pointer",
+    color: "#939a9f"
 }
