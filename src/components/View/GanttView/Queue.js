@@ -3,7 +3,7 @@ import {QueuePropTypes} from '../../WorkSpace/propTyps'
 import Job from './Job';
 import {getHourAsPixels} from '../../../utils/ganttUtils'
 import {connect} from 'react-redux'
-import { queueStyle } from '../../../constants/style';
+import { queueStyle, selectedJobStyle } from '../../../constants/style';
 
 
 const Queue = props => {
@@ -12,13 +12,13 @@ const Queue = props => {
         startTime,
         endTime,
         hourAsPixel,
-        viewId
+        viewId,
+        selectedJobs
     } = props;
     const width = getHourAsPixels(endTime, startTime, hourAsPixel);
     let initialTime = startTime;
     return (
         <div 
-            
             style={{
                 width: width,
                 color: "white",
@@ -30,8 +30,9 @@ const Queue = props => {
                 const jobWidth = getHourAsPixels(job.endTime, job.startTime, hourAsPixel)
                 const jobStyle = {
                     width: jobWidth,
-                    marginLeft: position,
+                    marginLeft: position
                 }
+                job.additionalParams.bgColor = selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor
                 initialTime = job.endTime;
                 return (
                     <Job 
@@ -43,8 +44,7 @@ const Queue = props => {
                         dependencies={job.dependencies}
                         additionalParams={job.additionalParams}
                         style={jobStyle}
-                    />
-                )
+                    />)
             } )}
         </div>
     )
