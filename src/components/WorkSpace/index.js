@@ -103,7 +103,6 @@ class WorkSpace extends Component {
 				ref={this.DOMElement}
 			>
 			<Modal />
-			
 			{this.props.views.map((view, index) => {
 						let firstView = this.props.views[index - 1];
 						let firstIndex = index - 1;
