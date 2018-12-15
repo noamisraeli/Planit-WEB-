@@ -1,6 +1,5 @@
 import agent from '../agent';
 import React from 'react';
-import Header from './Header'
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT, DATABASE_LOADED } from '../constants/actionTypes';
 import { store } from '../store';
@@ -50,15 +49,7 @@ class App extends React.Component {
     if (this.props.appLoaded) {
       return (
         <div>
-
-            <Header
-            appName={this.props.appName}
-            currentUser={this.props.currentUser} />
-            
             <WorkSpace />
-            
-            
-
         </div>
       );
     }
