@@ -122,6 +122,7 @@ const viewState = {
         {
             id: 1,
             type: GANTT_VIEW,
+            description: "Gantt view",
             startTimeView: new Date(2018, 10, 28, 1),
             selectedJobs: [],
             sizes: {
@@ -156,10 +157,10 @@ const viewState = {
                 }
             ]
         },
-        
         {
             id: 2,
             type: GANTT_VIEW,
+            description: "Gantt view",
             startTimeView: new Date(2018, 10, 28, 1),
             selectedJobs: [],
             sizes: {

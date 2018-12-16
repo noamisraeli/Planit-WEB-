@@ -25,7 +25,8 @@
     position: absolute;
     font-size: 15px;
     transform: translate(-24px, -11px) rotate(90deg) scale(0.8);
-    font-family: "Segoe UI" ,Arial,sans-serif
+    font-family: "Segoe UI" ,Arial,sans-serif;
+    width: 100px;
 }
 
 .view-content {
