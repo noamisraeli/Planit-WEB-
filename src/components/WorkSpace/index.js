@@ -111,6 +111,7 @@ class WorkSpace extends Component {
 								<Splitter 
                     canMove={index === 0 ? false : true}
 										title={view.type}
+										description={view.description}
 										firstView={firstView}
 										secondView={view}
 										firstIndex={firstIndex}

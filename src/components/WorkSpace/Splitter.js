@@ -56,7 +56,7 @@ const Splitter = props => {
                 style={{
                     transform: transform
                 }}>
-                {props.title}
+                {props.description}
             </h2>
         </div>
         )
@@ -73,7 +73,7 @@ const Splitter = props => {
                 style={{
                     transform:transform
                 }}>
-                {props.title}
+                {props.description}
             </h2>
         </div>
         )
