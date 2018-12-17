@@ -4,7 +4,6 @@ import './Table.css';
 const KeyValueTable = props => {
     const {
         id,
-        title,
         keyValueArray
     } = props;
     return (
