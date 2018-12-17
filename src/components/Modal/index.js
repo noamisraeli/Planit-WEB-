@@ -27,17 +27,18 @@ class Modal extends React.Component {
                 }
             })
             return(
-                
             <div 
                 className="modal"
                 onClick={() => this.props.onClick()}
                 >
                 <div className="modal-content">
                 <span className="close" onClick={() => this.props.onClick()}>&times;</span>
-                <div>{this.props.title}</div>
-                    <KeyValueTable 
-                        keyValueArray={keyValueArray}
-                        id={this.props.id}
+                <div className="modal-content-header">
+                    <h1>{this.props.title}</h1>
+                </div>
+                <KeyValueTable 
+                    keyValueArray={keyValueArray}
+                    id={this.props.id}
                     />                    
                 </div>
 

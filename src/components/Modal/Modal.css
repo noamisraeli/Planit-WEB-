@@ -21,6 +21,11 @@
     max-width: 80% 
 }
 
+.modal-content-header {
+    text-align: center;
+    padding: 10px
+}
+
 .close {
     color: #aaaaaa;
     float: right;
