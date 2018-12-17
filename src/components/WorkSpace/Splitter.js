@@ -4,6 +4,7 @@ import '../View/View.css';
 import { SPLITTER_DRAG_START, SPLITTER_DOUBLE_CLICKED } from '../../constants/actionTypes';
 import { splitterWidth, splitterTitleHorizontal } from '../../constants/style';
 import { getWidthById } from '../../utils/cssUtils';
+import { WORKSPACE } from '../../constants/configurations/commonConfiguration';
 
 const mapDispatchToProps = dispatch => ({
     onMouseDown: payload =>
@@ -30,7 +31,7 @@ const Splitter = props => {
     }
     const onMouseDown = e => {
         e.preventDefault();
-        const workspaceWidth = getWidthById("workspace")
+        const workspaceWidth = getWidthById(WORKSPACE)
         const payload = {
             startPosition: e.pageX * 100 / workspaceWidth,
             firstViewWidth: firstView.sizes.widthPercent,
