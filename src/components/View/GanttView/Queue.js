@@ -19,6 +19,7 @@ const Queue = props => {
     let initialTime = startTime;
     return (
         <div 
+            className="queue"
             style={{
                 width: width,
                 color: "white",
