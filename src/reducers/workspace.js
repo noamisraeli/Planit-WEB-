@@ -45,7 +45,6 @@ export default (state={}, action) =>{
             return {
                 ...state,
                 views: state.views.map(view => {
-                
                     if (view.id === action.payload.viewId){
                         if (action.payload.withCtrlKey){
                             if (view.selectedJobs.includes(action.payload.jobId)){
@@ -74,7 +73,8 @@ export default (state={}, action) =>{
                     isOpen: true,
                     content: action.payload.content,
                     type: action.payload.type,
-                    id:action.payload.id
+                    id:action.payload.id,
+                    title: action.payload.title
                 }
             }
         case CLOSE_MODAL:

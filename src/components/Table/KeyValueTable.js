@@ -4,14 +4,10 @@ import './Table.css';
 const KeyValueTable = props => {
     const {
         id,
-        title,
         keyValueArray
     } = props;
     return (
         <table>
-            <thead>
-                {title}
-            </thead>
             <tbody>
                 <tr>
                     <th>id</th>
