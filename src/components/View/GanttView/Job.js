@@ -3,6 +3,7 @@ import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL} from '../../../constants/action
 import {connect} from 'react-redux';
 import {JobPropTypes} from '../../WorkSpace/propTyps';
 import { JOB_PROPS_TITLE, JOB_PROPS_WIDTH, PROPS_MODAL_TYPE } from '../../../constants/configurations/modalConfiguration';
+import { START_TIME, END_TIME } from '../../../constants/configurations/commonConfiguration';
 
 const mapDispatchToProps = dispatch => ({
     dragStart: payload =>
@@ -29,7 +30,7 @@ const Job = props => {
     })
     return (
         <div
-            title={"Start time: " + expandedProps.startTime + "\n End time: " + expandedProps.endTime}
+            title={START_TIME + ": " + expandedProps.startTime + "\n"  + END_TIME + ": " + expandedProps.endTime}
             onDoubleClick={() => props.openModal({
                 content: expandedProps,
                 type: PROPS_MODAL_TYPE,
