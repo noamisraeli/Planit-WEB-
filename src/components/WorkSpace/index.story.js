@@ -127,6 +127,10 @@ const viewState = {
             description: GANNT_VIEW_DESCRIPTION,
             startTimeView: new Date(2018, 10, 28, 1),
             selectedJobs: [],
+            draggedComponent: {
+                isDragged: false,
+                compType: ""
+            },
             sizes: {
                 widthPercent: 47,
                 height: "100%",
@@ -165,6 +169,10 @@ const viewState = {
             description: GANNT_VIEW_DESCRIPTION,
             startTimeView: new Date(2018, 10, 28, 1),
             selectedJobs: [],
+            draggedComponent: {
+                isDragged: false,
+                compType: ""
+            },
             sizes: {
                 widthPercent: 50,
                 height: "100%",
