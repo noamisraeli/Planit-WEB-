@@ -13,6 +13,7 @@ import Modal from '../Modal';
 import View from '../View'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
+import { WORKSPACE } from '../../constants/configurations/commonConfiguration';
 
 
 const mapStateToProps = state => ({
@@ -97,7 +98,7 @@ class WorkSpace extends Component {
 		return (
 			<div 
 				className="workspace"
-				id="workspace"
+				id={WORKSPACE}
 				onMouseUp={this.onMouseUp}
 				onMouseMove={this.onMouseMove}
 				ref={this.DOMElement}
