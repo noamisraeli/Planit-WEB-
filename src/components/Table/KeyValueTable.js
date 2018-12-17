@@ -9,9 +9,6 @@ const KeyValueTable = props => {
     } = props;
     return (
         <table>
-            <thead>
-                {title}
-            </thead>
             <tbody>
                 <tr>
                     <th>id</th>
