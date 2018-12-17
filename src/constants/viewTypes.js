@@ -1,0 +1,1 @@
+export const GANTT_VIEW = 'GANTT_VIEW'

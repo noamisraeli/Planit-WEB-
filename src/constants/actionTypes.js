@@ -1,0 +1,42 @@
+export const APP_LOAD = 'APP_LOAD';
+export const REDIRECT = 'REDIRECT';
+export const REGISTER = 'REGISTER';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const ASYNC_START = 'ASYNC_START';
+export const ASYNC_END = 'ASYNC_END';
+
+export const WORKSPACE_UNLOADED = 'WORKSPACE_UNLOADED';
+export const WORKSPACE_LOADED = 'WORKSPACE_LOADED';
+export const WORKSPACE_MOUNTED = 'WORKSPACE_MOUNTED';
+
+export const VIEW_LOADED = 'VIEW_LOADED';
+export const GANTT_VIEW_LOADED = 'GANTT_VIEW_LOADED';
+export const GANTT_VIEW_UNLOADED = 'GANTT_VIEW_UNLOADED';
+
+export const QUEUE_DRAG_START = 'QUEUE_DRAG_START';
+export const QUEUE_DROP = 'QUEUE_DROP';
+export const QUEUE_FILTER_NAME_CHANGE = 'QUEUE_FILTER_NAME_CHANGE';
+
+export const JOB_DRAG_START = 'JOB_DRAG_START';
+export const JOB_DROP = 'JOB_DROP';
+export const JOB_SELECT = 'JOB_SELECT';
+
+export const DATABASE_LOADED = 'DATABASE_LOADED';
+export const DATABASE_UNLOADED = 'DATABASE_UNLOADED';
+
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';
+
+export const SCROLL_CHANGED = 'SCROLL_CHANGED';
+export const RESOLUTION_CHANGED = 'RESOLUTION_CHANGED'
+
+export const SPLITTER_DRAG_START = 'SPLITTER_DRAG_START';
+export const SPLITTER_DRAG_END = 'SPLITTER_DRAG_END';
+export const SPLITTER_DRAG = 'SPLITTER_DRAG';
+export const SPLITTER_DOUBLE_CLICKED = 'SPLITTER_DOUBLE_CLICKED'
+
+// Operators 
+export const GO_TO_FIRST_JOB = 'GO_TO_FIRST_JOB';
+export const GO_TO_LAST_JOB = 'GO_TO_LAST_JOB';
+
