@@ -1,5 +1,6 @@
 import {GANTT_VIEW} from '../../constants/viewTypes'
 import { GO_TO_LAST_JOB, GO_TO_FIRST_JOB } from '../../constants/actionTypes';
+import { GO_TO_LAST_JOB_TITLE, GO_TO_FIRST_JOB_TITLE } from '../../constants/configurations/operatorConfiguration';
 
 const jobs = [
     {
@@ -145,14 +146,14 @@ const viewState = {
                     type: "icon",
                     name:"fast_forward", 
                     position:"right", 
-                    title:"Go to last job",
+                    title: GO_TO_LAST_JOB_TITLE,
                     action: GO_TO_LAST_JOB
                 },
                 {
                     type: "icon",
                     name:"fast_rewind", 
                     position:"right", 
-                    title:"Go to first job", 
+                    title: GO_TO_FIRST_JOB_TITLE, 
                     action: GO_TO_FIRST_JOB
                 }
             ]
