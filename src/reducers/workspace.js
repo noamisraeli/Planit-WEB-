@@ -189,7 +189,7 @@ export default (state={}, action) =>{
                         view.draggedComponent = {
                             compType: JOB,
                             isDragged: true,
-                            id: jobId
+                            id: action.payload.jobId
                         } 
                     }
                     return view
