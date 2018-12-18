@@ -22,7 +22,7 @@ const Queue = props => {
     let initialTime = startTime;
     return (
         <div 
-            onDragOver={onDragOver}
+            onDragover={onDragOver}
             className="queue"
             style={{
                 width: width,
