@@ -15,10 +15,14 @@ const Queue = props => {
         viewId,
         selectedJobs
     } = props;
+    const onDragOver = (e) => {
+        e.preventDefault()
+    }
     const width = getHourAsPixels(endTime, startTime, hourAsPixel);
     let initialTime = startTime;
     return (
         <div 
+            onDragOver={onDragOver}
             className="queue"
             style={{
                 width: width,
