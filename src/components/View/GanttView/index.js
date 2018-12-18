@@ -102,6 +102,7 @@ class GanttView extends React.Component {
                     }}
                         onScroll={this.handleScroll}
                         onWheel={this.handleWheel}
+                        onDragOver={e => {e.preventDefault()}}
                         ref="gantt"
                     >
                 {this.props.queues.map((queue, index) =>{
