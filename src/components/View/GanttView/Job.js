@@ -6,7 +6,7 @@ import { JOB_PROPS_TITLE, JOB_PROPS_WIDTH, PROPS_MODAL_TYPE } from '../../../con
 import { START_TIME, END_TIME } from '../../../constants/configurations/commonConfiguration';
 
 const mapDispatchToProps = dispatch => ({
-    dragStart: payload =>
+    onDragStart: payload =>
         dispatch({ type: JOB_DRAG_START, payload}),
     onClick: payload =>
         dispatch({type: JOB_SELECT, payload}),
@@ -28,6 +28,9 @@ const Job = props => {
         startTime: startTime.toLocaleString(),
         endTime: endTime.toLocaleString()
     })
+    const onDragStart = (e) => {
+        props.onDragStart({jobId:id, viewId:viewId})
+    }
     return (
         <div
             title={START_TIME + ": " + expandedProps.startTime + "\n"  + END_TIME + ": " + expandedProps.endTime}
@@ -40,13 +43,15 @@ const Job = props => {
             })
             }
             onClick={(e) => props.onClick({jobId:id, viewId:viewId, withCtrlKey:e.ctrlKey})}
+            onDragStart={onDragStart}
             className="job-container"
             style={style}
             >
             <div className="job"
                 style={{
                     backgroundColor: additionalParams.bgColor
-                }}>
+                }}
+                draggable>
             </div>
             
             </div>
