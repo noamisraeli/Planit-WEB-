@@ -22,6 +22,7 @@ const mapStateToProps = (state, ownProps) => ({
     height: state.workspace.views[ownProps.index].sizes.height,
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
     operators: state.workspace.views[ownProps.index].operators,
+    draggedComponent: state.workspace.views[ownProps.index].draggedComponent
 })
 
 const mapDispatchToProps = dispatch => ({
