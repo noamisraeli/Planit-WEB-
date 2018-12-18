@@ -12,6 +12,7 @@ import {
 import { viewHeaderStyle } from '../../constants/style';
 import { returnAsCalcFunction } from '../../utils/cssUtils';
 import Operator from './Operator';
+import { QUEUE_NAME_FILTER_PLACEHOLDER } from '../../constants/configurations/viewConfiguration';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -20,7 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
     width: state.workspace.views[ownProps.index].sizes.widthPercent,
     height: state.workspace.views[ownProps.index].sizes.height,
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
-    operators: state.workspace.views[ownProps.index].operators
+    operators: state.workspace.views[ownProps.index].operators,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -88,7 +89,7 @@ class View extends React.Component {
                     <div style={{float:"left", height:"100%", paddingLeft:5}}>
                     <input 
                             onChange={this.onFreeTextInputChange}
-                            placeholder="Queue name filter..."
+                            placeholder={QUEUE_NAME_FILTER_PLACEHOLDER}
                             value={this.props.freeTextFilter}/>
                     </div>
                     {this.props.operators.map((operator, index) => {
@@ -106,10 +107,10 @@ class View extends React.Component {
                     })}
                 </div>
                 <div className="view-content-container"
-                     style={{
+                    style={{
                         height: returnAsCalcFunction(100, "-", viewHeaderStyle.height * 2)
-                     }}>
-                      {view}
+                    }}>
+                    {view}
                 </div>
                 </div>
                 
