@@ -4,7 +4,8 @@ import {
 	GANTT_VIEW_LOADED, 
     GANTT_VIEW_UNLOADED,
     SCROLL_CHANGED,
-    RESOLUTION_CHANGED
+    RESOLUTION_CHANGED,
+    JOB_DRAG_OVER
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
 import Queue from './Queue';
@@ -29,7 +30,9 @@ const mapDispatchToProps = dispatch => ({
     onResolutionChange: payload => 
         dispatch({type: RESOLUTION_CHANGED, payload}),
     onUnload: viewId => 
-        dispatch({type: GANTT_VIEW_UNLOADED, viewId})
+        dispatch({type: GANTT_VIEW_UNLOADED, viewId}),
+    onJobDragOver: payload => 
+        dispatch({type: JOB_DRAG_OVER, payload})
 })
 
 class GanttView extends React.Component {
@@ -75,6 +78,16 @@ class GanttView extends React.Component {
         }
     }
 
+    onDragOver = (e) => {
+        e.preventDefault()
+        let rect = e.target.getBoundingClientRect()
+        const dragPosition = getPixelsAsHour(e.clientX - rect.left, this.props.startTime, this.props.hourAsPixel)
+        this.onJobDragOver({
+            dragState: dragPosition,
+            viewId: this.props.id
+        })
+    }
+
     render(){
         if(this.props.jobs){
         return (
@@ -102,7 +115,8 @@ class GanttView extends React.Component {
                     }}
                         onScroll={this.handleScroll}
                         onWheel={this.handleWheel}
-                        onDragOver={e => {e.preventDefault()}}
+                        onDragOver={this.onDragOver}
+                        onDrop={this.onDrop}
                         ref="gantt"
                     >
                 {this.props.queues.map((queue, index) =>{

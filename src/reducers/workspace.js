@@ -15,7 +15,8 @@ import {
     GO_TO_FIRST_JOB,
     GO_TO_LAST_JOB,
     JOB_SELECT,
-    JOB_DRAG_START
+    JOB_DRAG_START,
+    JOB_DRAG_OVER
 
     
 } from '../constants/actionTypes';
@@ -191,6 +192,16 @@ export default (state={}, action) =>{
                             isDragged: true,
                             id: action.payload.jobId
                         } 
+                    }
+                    return view
+                })
+            }
+        case JOB_DRAG_OVER:
+            return {
+                ...state,
+                views: state.views.map(view => {
+                    if (view.id === action.payload.viewId){
+                        view.dragState = action.payload.dragState
                     }
                     return view
                 })
