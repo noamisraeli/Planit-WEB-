@@ -82,7 +82,7 @@ class GanttView extends React.Component {
         e.preventDefault()
         let rect = e.target.getBoundingClientRect()
         const dragPosition = getPixelsAsHour(e.clientX - rect.left, this.props.startTime, this.props.hourAsPixel)
-        this.onJobDragOver({
+        this.props.onJobDragOver({
             dragState: dragPosition,
             viewId: this.props.id
         })
@@ -115,21 +115,17 @@ class GanttView extends React.Component {
                     }}
                         onScroll={this.handleScroll}
                         onWheel={this.handleWheel}
-                        onDragOver={this.onDragOver}
-                        onDrop={this.onDrop}
                         ref="gantt"
                     >
                 {this.props.queues.map((queue, index) =>{
                     const queueJobs = this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id})
                         return (
                             <Queue
+                            onDragOver={this.onDragOver}
                             key={index}
                             id={queue.id}
                             viewId={this.props.id}
                             jobs={queueJobs}
-                            numberOfParallelJobs={queue.numberOfParallelJobs}
-                            jobTypesAllowed={queue.jobTypesAllowed}
-                            additionalParams={queue.additionalParams}
                             hourAsPixel={this.props.hourAsPixel}
                             startTime={this.props.startTime}
                             endTime={this.props.endTime}

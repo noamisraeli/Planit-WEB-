@@ -13,7 +13,8 @@ const Queue = props => {
         endTime,
         hourAsPixel,
         viewId,
-        selectedJobs
+        selectedJobs,
+        ...additionalProps
     } = props;
     const width = getHourAsPixels(endTime, startTime, hourAsPixel);
     let initialTime = startTime;
@@ -25,6 +26,7 @@ const Queue = props => {
                 color: "white",
                 ...queueStyle
             }}
+            {...additionalProps}
             >
             {jobs.map((job, index) => {
                 const position = getHourAsPixels(job.startTime, initialTime, hourAsPixel)
