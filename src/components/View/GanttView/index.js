@@ -19,7 +19,8 @@ const mapStateToProps = (state, ownProps) => ({
     hourAsPixel: state.workspace.views[ownProps.index].sizes.hourAsPixel,
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
-    selectedJobs: state.workspace.views[ownProps.index].selectedJobs
+    selectedJobs: state.workspace.views[ownProps.index].selectedJobs,
+    dragState: state.workspace.views[ownProps.index].dragState
   });
 
 const mapDispatchToProps = dispatch => ({
