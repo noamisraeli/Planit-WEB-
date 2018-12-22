@@ -82,7 +82,7 @@ class GanttView extends React.Component {
     onDragOver = (e) => {
         e.preventDefault()
         let rect = e.target.getBoundingClientRect()
-        const dragPosition = getPixelsAsHour(e.clientX - rect.left, this.props.startTime, this.props.hourAsPixel)
+        const dragPosition = getPixelsAsHour(e.clientX - rect.left, this.props.startTime, this.props.hourAsPixel).toLocaleString()
         this.props.onJobDragOver({
             dragState: dragPosition,
             viewId: this.props.id

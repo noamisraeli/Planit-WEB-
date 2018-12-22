@@ -131,6 +131,7 @@ const viewState = {
                 isDragged: false,
                 compType: ""
             },
+            dragState: "",
             sizes: {
                 widthPercent: 47,
                 height: "100%",

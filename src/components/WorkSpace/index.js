@@ -100,7 +100,7 @@ class WorkSpace extends Component {
 				className="workspace"
 				id={WORKSPACE}
 				onMouseUp={this.onMouseUp}
-				onMouseMove={this.onMouseMove}
+				// onMouseMove={this.onMouseMove}
 				ref={this.DOMElement}
 			>
 			<Modal />
