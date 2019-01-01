@@ -1,5 +1,7 @@
 .notification {
     position: absolute;
-    color: white;
-    z-index: 2; 
+    background-color: white;
+    z-index: 2;
+    padding: 5px;
+    border-radius: 4px;
   }
