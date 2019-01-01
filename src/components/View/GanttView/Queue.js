@@ -2,7 +2,6 @@ import React from 'react';
 import {QueuePropTypes} from '../../WorkSpace/propTyps'
 import Job from './Job';
 import {getHourAsPixels} from '../../../utils/ganttUtils'
-import {connect} from 'react-redux'
 import { queueStyle, selectedJobStyle } from '../../../constants/style';
 
 
