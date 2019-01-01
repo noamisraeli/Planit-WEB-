@@ -25,3 +25,7 @@ export const getParentFullWidth = (self) => {
 export const returnAsCalcFunction = (widthInPercent, operator, widthInPixel) => {
     return "calc(" + widthInPercent + "% " + operator + " " + widthInPixel + "px)"
 }
+
+export const returnAsSeconds = (numberOfSeconds) => {
+    return numberOfSeconds + "s"
+}

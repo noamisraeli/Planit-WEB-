@@ -19,6 +19,7 @@ export const QUEUE_DROP = 'QUEUE_DROP';
 export const QUEUE_FILTER_NAME_CHANGE = 'QUEUE_FILTER_NAME_CHANGE';
 
 export const JOB_DRAG_START = 'JOB_DRAG_START';
+export const JOB_DRAG_OVER = 'JOB_DRAG_OVER';
 export const JOB_DROP = 'JOB_DROP';
 export const JOB_SELECT = 'JOB_SELECT';
 
