@@ -55,4 +55,4 @@ const Queue = props => {
 
 Queue.propTypes = QueuePropTypes;
 
-export default connect(() => ({}))(Queue);
+export default Queue;
