@@ -29,13 +29,12 @@ class Notification extends React.Component {
         {
             visibility: "hidden",
             opacity: 0, 
-            transition: "visibility 4s , opacity 2s linear",            
+            transition: "visibility 2s , opacity 2s linear",            
         } 
         return (
         <div className="notification"
             style={{
-                left: 15 + queueHeadersStyle.width,
-                bottom :30,
+                ...this.props.style,
                 ...additionalStyle
             }}>
             {this.props.content}
