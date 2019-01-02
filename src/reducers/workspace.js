@@ -205,16 +205,6 @@ export default (state={}, action) =>{
                             style: action.payload.style
                 }
             }
-        case JOB_DRAG_OVER:
-            return {
-                ...state,
-                views: state.views.map(view => {
-                    if (view.id === action.payload.viewId){
-                        view.dragState = action.payload.dragState
-                    }
-                    return view
-                })
-            }
         case ASYNC_START:
             return {
               ...state,
