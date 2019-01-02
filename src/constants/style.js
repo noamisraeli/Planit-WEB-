@@ -46,7 +46,14 @@ export const draggedJobStyle = {
 }
 
 export const jobStyle = {
-    display: "inline-block"
+    border: "1px solid black",
+    borderRadius: "4px",
+    height: "inherit",
+    position: "relative",
+    minWidth: "15px",
+    width: "100%",
+    boxShadow: "2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
+    cursor: "pointer"
 }
 export const operatorStyle = {
     padding: 3,

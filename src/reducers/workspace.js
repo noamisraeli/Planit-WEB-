@@ -16,8 +16,8 @@ import {
     GO_TO_LAST_JOB,
     JOB_SELECT,
     JOB_DRAG_START,
-    JOB_DRAG_OVER,
-    ELEMENT_DRAG_OVER
+    ELEMENT_DRAG_OVER,
+    ELEMENT_DRAG_END
 
     
 } from '../constants/actionTypes';
@@ -205,6 +205,14 @@ export default (state={}, action) =>{
                             style: action.payload.style
                 }
             }
+        case ELEMENT_DRAG_END:
+            return {
+                ...state,
+                draggedComponent :{
+                    compType: JOB,
+                    isDragged: false
+                }
+            }
         case ASYNC_START:
             return {
               ...state,
@@ -213,4 +221,4 @@ export default (state={}, action) =>{
         default:
             return state
     }
-}
+} 

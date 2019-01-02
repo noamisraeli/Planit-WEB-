@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {JobPropTypes} from '../../WorkSpace/propTyps';
 import { JOB_PROPS_TITLE, JOB_PROPS_WIDTH, PROPS_MODAL_TYPE } from '../../../constants/configurations/modalConfiguration';
 import { START_TIME, END_TIME } from '../../../constants/configurations/commonConfiguration';
+import { jobStyle } from '../../../constants/style';
 
 const mapDispatchToProps = dispatch => ({
     onDragStart: payload =>
@@ -29,14 +30,18 @@ const Job = props => {
         endTime: endTime.toLocaleString()
     })
     const onDragStart = (e) => {
+        const rect = e.target.getBoundingClientRect()
         props.onDragStart({jobId:id, 
             viewId:viewId, 
             style:{
                 width: e.target.offsetWidth,
                 height: e.target.offsetHeight,
                 backgroundColor: additionalParams.bgColor,
-                left: e.pageX,
-                top: e.pageY
+                left: rect.left,
+                top: rect.top,
+                border: jobStyle.border,
+                borderRadius: jobStyle.borderRadius,
+                boxShadow: jobStyle.boxShadow
         }})
     }
     return (
@@ -58,7 +63,8 @@ const Job = props => {
             <div className="job"
                 style={{
                     backgroundColor: additionalParams.bgColor,
-                    display: additionalParams.display
+                    display: additionalParams.display,
+                    ...jobStyle
                 }}
                 id={id}
                 draggable>

@@ -8,7 +8,8 @@ import {
  	SPLITTER_DRAG,
 	SPLITTER_DRAG_END,
 	WORKSPACE_MOUNTED,
-	ELEMENT_DRAG_OVER
+	ELEMENT_DRAG_OVER,
+	ELEMENT_DRAG_END
 } from '../../constants/actionTypes';
 import Modal from '../Modal';
 import View from '../View'
@@ -38,7 +39,9 @@ const mapDispatchToProps = dispatch => ({
 	onSplitterDrag: payload => 
 		dispatch({type: SPLITTER_DRAG, payload}),
 	onElementDragOver: payload =>
-		dispatch({type:ELEMENT_DRAG_OVER, payload})
+		dispatch({type:ELEMENT_DRAG_OVER, payload}),
+	onElementDragEnd: () =>
+		dispatch({type:ELEMENT_DRAG_END})
   });
 
 class WorkSpace extends Component {
@@ -66,6 +69,9 @@ class WorkSpace extends Component {
 		e.preventDefault()
 		if (this.props.splitter.isDragged){
 			this.props.onSplitterUnCkicked()
+		}
+		if (this.props.draggedComponent.isDragged){
+			this.props.onElementDragEnd()
 		}
 	}
 

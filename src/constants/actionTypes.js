@@ -38,6 +38,8 @@ export const SPLITTER_DRAG = 'SPLITTER_DRAG';
 export const SPLITTER_DOUBLE_CLICKED = 'SPLITTER_DOUBLE_CLICKED';
 
 export const ELEMENT_DRAG_OVER = 'ELEMENT_DRAG_OVER';
+export const ELEMENT_DRAG_END = 'ELEMENT_DRAG_END';
+
 // Operators 
 export const GO_TO_FIRST_JOB = 'GO_TO_FIRST_JOB';
 export const GO_TO_LAST_JOB = 'GO_TO_LAST_JOB';
