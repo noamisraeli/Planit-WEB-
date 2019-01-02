@@ -7,13 +7,15 @@ import {
 	WORKSPACE_UNLOADED,
  	SPLITTER_DRAG,
 	SPLITTER_DRAG_END,
-	WORKSPACE_MOUNTED
+	WORKSPACE_MOUNTED,
+	ELEMENT_DRAG_OVER
 } from '../../constants/actionTypes';
 import Modal from '../Modal';
 import View from '../View'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
 import { WORKSPACE } from '../../constants/configurations/commonConfiguration';
+import { draggedJobStyle } from '../../constants/style';
 
 
 const mapStateToProps = state => ({
@@ -34,7 +36,9 @@ const mapDispatchToProps = dispatch => ({
 	onSplitterUnCkicked: () => 
 		dispatch({type: SPLITTER_DRAG_END}),
 	onSplitterDrag: payload => 
-		dispatch({type: SPLITTER_DRAG, payload})
+		dispatch({type: SPLITTER_DRAG, payload}),
+	onElementDragOver: payload =>
+		dispatch({type:ELEMENT_DRAG_OVER, payload})
   });
 
 class WorkSpace extends Component {
@@ -87,6 +91,12 @@ class WorkSpace extends Component {
 				secondIndex: this.props.splitter.secondIndex
 			})
 		}
+		if(this.props.draggedComponent.isDragged){
+			this.props.onElementDragOver({
+				left: e.pageX,
+				top: e.pageY
+			})
+		}
 	}
 	
 	render(){
@@ -101,10 +111,13 @@ class WorkSpace extends Component {
 				className="workspace"
 				id={WORKSPACE}
 				onMouseUp={this.onMouseUp}
-				// onMouseMove={this.onMouseMove}
+				onMouseMove={this.onMouseMove}
 				ref={this.DOMElement}
 			>
 			<Modal />
+			<div className="dragged-element" style={{...this.props.draggedComponent.style, display: this.props.draggedComponent.isDragged ? "block": draggedJobStyle.display}}>
+
+			</div>
 			{this.props.views.map((view, index) => {
 						let firstView = this.props.views[index - 1];
 						let firstIndex = index - 1;
