@@ -16,7 +16,8 @@ import {
     GO_TO_LAST_JOB,
     JOB_SELECT,
     JOB_DRAG_START,
-    JOB_DRAG_OVER
+    JOB_DRAG_OVER,
+    ELEMENT_DRAG_OVER
 
     
 } from '../constants/actionTypes';
@@ -181,6 +182,17 @@ export default (state={}, action) =>{
                     }
                     return view
                 })
+            }
+        case ELEMENT_DRAG_OVER:
+            return {
+                ...state,
+                draggedComponent: {
+                    ...state.draggedComponent,
+                    style:{
+                        ...state.draggedComponent.style,
+                        ...action.payload
+                    }
+                }
             }
         case JOB_DRAG_START:
             return {
