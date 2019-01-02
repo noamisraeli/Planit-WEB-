@@ -29,6 +29,7 @@ const Job = props => {
         endTime: endTime.toLocaleString()
     })
     const onDragStart = (e) => {
+        console.log(e.target.offsetWidth)
         props.onDragStart({jobId:id, viewId:viewId})
     }
     return (
@@ -49,8 +50,10 @@ const Job = props => {
             >
             <div className="job"
                 style={{
-                    backgroundColor: additionalParams.bgColor
+                    backgroundColor: additionalParams.bgColor,
+                    display: additionalParams.display
                 }}
+                id={id}
                 draggable>
             </div>
             

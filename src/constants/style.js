@@ -1,7 +1,6 @@
 export const googleColors = {
     blue: "#4285f4",
-    darkBlue: "rgb(42,86,198)",
-    
+    darkBlue: "rgb(42,86,198)"
 }
 
 export const splitterTitleHorizontal = "translate(-24px, -11px) rotate(90deg) scale(0.8)"
@@ -42,6 +41,13 @@ export const selectedJobStyle = {
     backgroundColor: "gray"
 }
 
+export const draggedJobStyle = {
+    display: "none"
+}
+
+export const jobStyle = {
+    display: "inline-block"
+}
 export const operatorStyle = {
     padding: 3,
     cursor:"pointer",

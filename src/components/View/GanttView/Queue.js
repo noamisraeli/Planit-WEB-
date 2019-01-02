@@ -2,7 +2,7 @@ import React from 'react';
 import {QueuePropTypes} from '../../WorkSpace/propTyps'
 import Job from './Job';
 import {getHourAsPixels} from '../../../utils/ganttUtils'
-import { queueStyle, selectedJobStyle } from '../../../constants/style';
+import { queueStyle, selectedJobStyle, draggedJobStyle } from '../../../constants/style';
 
 
 const Queue = props => {
@@ -13,6 +13,7 @@ const Queue = props => {
         hourAsPixel,
         viewId,
         selectedJobs,
+        draggedJobID,
         ...additionalProps
     } = props;
     const width = getHourAsPixels(endTime, startTime, hourAsPixel);
@@ -35,6 +36,7 @@ const Queue = props => {
                     marginLeft: position
                 }
                 job.additionalParams.bgColor = selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor
+                job.additionalParams.display = draggedJobID === job.id ? draggedJobStyle.display: jobStyle.display;
                 initialTime = job.endTime;
                 return (
                     <Job 
