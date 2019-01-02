@@ -37,8 +37,8 @@ export default (state={}, action) =>{
                 },
                 modal: {
                     isOpen: false
-                }
-            }
+                },
+                draggedComponent: action.payload[0].draggedComponent}
         case WORKSPACE_MOUNTED:
             return {
                 ...state,
@@ -185,16 +185,13 @@ export default (state={}, action) =>{
         case JOB_DRAG_START:
             return {
                 ...state,
-                views: state.views.map(view => {
-                    if(view.id === action.payload.viewId){
-                        view.draggedComponent = {
+                draggedComponent : {
                             compType: JOB,
                             isDragged: true,
-                            id: action.payload.jobId
-                        } 
-                    }
-                    return view
-                })
+                            viewId: action.payload.viewId,
+                            id: action.payload.jobId,
+                            style: action.payload.style
+                }
             }
         case JOB_DRAG_OVER:
             return {

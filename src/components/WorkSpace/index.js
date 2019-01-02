@@ -20,7 +20,8 @@ const mapStateToProps = state => ({
 	...state.workspace,
 	views: state.workspace.views,
 	splitter: state.workspace.splitter,
-	width: state.workspace.width
+	width: state.workspace.width,
+	draggedComponent: state.workspace.draggedComponent
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -123,6 +124,7 @@ class WorkSpace extends Component {
 										id={view.id}
 										index={index}
 										type={view.type}
+										draggedComponent={this.props.draggedComponent}
 										{...view}
 								/>
 								

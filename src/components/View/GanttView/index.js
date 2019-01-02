@@ -22,7 +22,7 @@ const mapStateToProps = (state, ownProps) => ({
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
     selectedJobs: state.workspace.views[ownProps.index].selectedJobs,
     dragState: state.workspace.views[ownProps.index].dragState,
-    draggedComponent: state.workspace.views[ownProps.index].draggedComponent
+    draggedComponent: state.workspace.draggedComponent
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -133,7 +133,9 @@ class GanttView extends React.Component {
                             startTime={this.props.startTime}
                             endTime={this.props.endTime}
                             selectedJobs={this.props.selectedJobs}             
-                            draggedJobID={this.props.draggedComponent.compType === JOB ? this.props.draggedComponent.id : null}/>
+                            draggedJobID={this.props.draggedComponent.compType === JOB 
+                                                && this.props.draggedComponent.viewId === this.props.id 
+                                                ? this.props.draggedComponent.id : null}/>
                             )
                     }     
                 )}
