@@ -29,7 +29,6 @@ const Job = props => {
         endTime: endTime.toLocaleString()
     })
     const onDragStart = (e) => {
-        console.log(e.pageX)
         props.onDragStart({jobId:id, 
             viewId:viewId, 
             style:{
