@@ -15,8 +15,9 @@ import Modal from '../Modal';
 import View from '../View'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
-import { WORKSPACE } from '../../constants/configurations/commonConfiguration';
+import { WORKSPACE, JOB, QUEUE } from '../../constants/configurations/commonConfiguration';
 import { draggedJobStyle } from '../../constants/style';
+import { getElementByMouesPosition } from '../../utils/domUtils';
 
 
 const mapStateToProps = state => ({
@@ -71,6 +72,10 @@ class WorkSpace extends Component {
 			this.props.onSplitterUnCkicked()
 		}
 		if (this.props.draggedComponent.isDragged){
+			if (this.props.draggedComponent.compType === JOB){
+				const dropContainer = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false)
+				dropContainer === (undefined || []) ? alert("You cant drop it here !") : alert("You just dropped it in queue id: " + dropContainer.id)
+			}			
 			this.props.onElementDragEnd()
 		}
 	}
@@ -98,6 +103,7 @@ class WorkSpace extends Component {
 			})
 		}
 		if(this.props.draggedComponent.isDragged){
+
 			this.props.onElementDragOver({
 				left: e.pageX -  this.props.draggedComponent.mouseRelativePosition.x,
 				top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
