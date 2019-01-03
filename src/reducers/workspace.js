@@ -202,7 +202,8 @@ export default (state={}, action) =>{
                             isDragged: true,
                             viewId: action.payload.viewId,
                             id: action.payload.jobId,
-                            style: action.payload.style
+                            style: action.payload.style,
+                            mouseRelativePosition: action.payload.mouseRelativePosition
                 }
             }
         case ELEMENT_DRAG_END:

@@ -32,7 +32,11 @@ const Job = props => {
     const onDragStart = (e) => {
         const rect = e.target.getBoundingClientRect()
         props.onDragStart({jobId:id, 
-            viewId:viewId, 
+            viewId:viewId,
+            mouseRelativePosition: {
+                x: e.pageX - rect.left, 
+                y: e.pageY - rect.top
+            },
             style:{
                 width: e.target.offsetWidth,
                 height: e.target.offsetHeight,

@@ -99,8 +99,8 @@ class WorkSpace extends Component {
 		}
 		if(this.props.draggedComponent.isDragged){
 			this.props.onElementDragOver({
-				left: e.pageX,
-				top: e.pageY
+				left: e.pageX -  this.props.draggedComponent.mouseRelativePosition.x,
+				top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
 			})
 		}
 	}
