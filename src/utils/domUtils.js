@@ -1,9 +1,9 @@
-export const getElementByMouesPosition = (x, y, classesAlowed=null, returnMany=true) => {
+export const getElementByMouesPosition = (x, y, classesAllowed=null, returnMany=true) => {
     const elements = document.elementsFromPoint(x, y).filter(element => {
-        if (classesAlowed){
+        if (classesAllowed){
             return classesAllowed.includes(element.className)
         }
         return true
     })
-    return returnMany ? elements : element[0]
+    return returnMany ? elements : elements[0]
 }
