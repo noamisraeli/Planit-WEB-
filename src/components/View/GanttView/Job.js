@@ -29,24 +29,32 @@ const Job = props => {
         startTime: startTime.toLocaleString(),
         endTime: endTime.toLocaleString()
     })
+    let mouseTimeout;
     const onDragStart = (e) => {
         const rect = e.target.getBoundingClientRect()
-        props.onDragStart({jobId:id, 
+        const mouseRelativePosition =  {
+            x: e.pageX - rect.left, 
+            y: e.pageY - rect.top
+        }
+        const width = e.target.offsetWidth;
+        const height = e.target.offsetHeight;
+        mouseTimeout = setTimeout( () => {props.onDragStart({jobId:id, 
             viewId:viewId,
-            mouseRelativePosition: {
-                x: e.pageX - rect.left, 
-                y: e.pageY - rect.top
-            },
+            mouseRelativePosition: mouseRelativePosition,
             style:{
-                width: e.target.offsetWidth,
-                height: e.target.offsetHeight,
+                width: width,
+                height: height,
                 backgroundColor: additionalParams.bgColor,
                 left: rect.left,
                 top: rect.top,
                 border: jobStyle.border,
                 borderRadius: jobStyle.borderRadius,
                 boxShadow: jobStyle.boxShadow
-        }})
+        }})}, 500);
+    }
+    const onClick = (e) => {
+        clearTimeout(mouseTimeout); 
+        props.onClick({jobId:id, viewId:viewId, withCtrlKey:e.ctrlKey});
     }
     return (
         <div
@@ -59,7 +67,7 @@ const Job = props => {
                 width: JOB_PROPS_WIDTH
             })
             }
-            onClick={(e) => props.onClick({jobId:id, viewId:viewId, withCtrlKey:e.ctrlKey})}
+            onClick={onClick}
             onMouseDown={onDragStart}
             className="job-container"
             style={style}
