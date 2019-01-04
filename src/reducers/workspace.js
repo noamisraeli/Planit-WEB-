@@ -16,7 +16,10 @@ import {
     GO_TO_LAST_JOB,
     JOB_SELECT,
     JOB_DRAG_START,
-    JOB_DRAG_OVER
+    ELEMENT_DRAG_OVER,
+    ELEMENT_DRAG_END,
+    JOB_DRAG_OVER,
+    JOB_DROP
 
     
 } from '../constants/actionTypes';
@@ -37,8 +40,8 @@ export default (state={}, action) =>{
                 },
                 modal: {
                     isOpen: false
-                }
-            }
+                },
+                draggedComponent: action.payload[0].draggedComponent}
         case WORKSPACE_MOUNTED:
             return {
                 ...state,
@@ -182,29 +185,54 @@ export default (state={}, action) =>{
                     return view
                 })
             }
+        case ELEMENT_DRAG_OVER:
+            return {
+                ...state,
+                draggedComponent: {
+                    ...state.draggedComponent,
+                    style:{
+                        ...state.draggedComponent.style,
+                        ...action.payload
+                    }
+                }
+            }
         case JOB_DRAG_START:
             return {
                 ...state,
-                views: state.views.map(view => {
-                    if(view.id === action.payload.viewId){
-                        view.draggedComponent = {
+                draggedComponent : {
                             compType: JOB,
                             isDragged: true,
-                            id: action.payload.jobId
-                        }
-                    }
-                    return view
-                })
+                            viewId: action.payload.viewId,
+                            id: action.payload.jobId,
+                            style: action.payload.style,
+                            mouseRelativePosition: action.payload.mouseRelativePosition
+                }
             }
         case JOB_DRAG_OVER:
             return {
                 ...state,
-                views: state.views.map(view => {
-                    if (view.id === action.payload.viewId){
-                        view.dragState = action.payload.dragState
+                draggedComponent: {
+                    ...state.draggedComponent,
+                    style: {
+                        ...state.draggedComponent.style,
+                        ...action.payload.style
                     }
-                    return view
-                })
+                }
+            }
+        case JOB_DROP:
+            return {
+                ...state,
+                draggedComponent: {
+                    isDragged: false
+                }
+            }
+        case ELEMENT_DRAG_END:
+            return {
+                ...state,
+                draggedComponent :{
+                    compType: JOB,
+                    isDragged: false
+                }
             }
         case ASYNC_START:
             return {
@@ -214,4 +242,4 @@ export default (state={}, action) =>{
         default:
             return state
     }
-}
+} 

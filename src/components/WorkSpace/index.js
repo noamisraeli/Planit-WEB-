@@ -7,20 +7,24 @@ import {
 	WORKSPACE_UNLOADED,
  	SPLITTER_DRAG,
 	SPLITTER_DRAG_END,
-	WORKSPACE_MOUNTED
+	WORKSPACE_MOUNTED,
+	ELEMENT_DRAG_OVER,
+	ELEMENT_DRAG_END
 } from '../../constants/actionTypes';
 import Modal from '../Modal';
 import View from '../View'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
-import { WORKSPACE } from '../../constants/configurations/commonConfiguration';
+import { WORKSPACE, GANTT_VIEW_GANTT } from '../../constants/configurations/commonConfiguration';
+import { getElementByMouesPosition } from '../../utils/domUtils';
 
 
 const mapStateToProps = state => ({
 	...state.workspace,
 	views: state.workspace.views,
 	splitter: state.workspace.splitter,
-	width: state.workspace.width
+	width: state.workspace.width,
+	draggedComponent: state.workspace.draggedComponent
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -33,7 +37,11 @@ const mapDispatchToProps = dispatch => ({
 	onSplitterUnCkicked: () => 
 		dispatch({type: SPLITTER_DRAG_END}),
 	onSplitterDrag: payload => 
-		dispatch({type: SPLITTER_DRAG, payload})
+		dispatch({type: SPLITTER_DRAG, payload}),
+	onElementDragOver: payload =>
+		dispatch({type:ELEMENT_DRAG_OVER, payload}),
+	onElementDragEnd: () =>
+		dispatch({type:ELEMENT_DRAG_END})
   });
 
 class WorkSpace extends Component {
@@ -86,6 +94,13 @@ class WorkSpace extends Component {
 				secondIndex: this.props.splitter.secondIndex
 			})
 		}
+		if(this.props.draggedComponent.isDragged){
+			if (!getElementByMouesPosition(e.pageX, e.pageY, [GANTT_VIEW_GANTT], false)){
+			this.props.onElementDragOver({
+				left: e.pageX -  this.props.draggedComponent.mouseRelativePosition.x,
+				top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
+			})}
+		}
 	}
 	
 	render(){
@@ -123,6 +138,7 @@ class WorkSpace extends Component {
 										id={view.id}
 										index={index}
 										type={view.type}
+										draggedComponent={this.props.draggedComponent}
 										{...view}
 								/>
 								

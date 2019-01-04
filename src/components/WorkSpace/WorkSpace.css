@@ -1,6 +1,7 @@
 .workspace {
     height: 300px;
-    width: "100%"
+    width: "100%";
+    position: relative;
 }
 
 .splitter {
@@ -12,4 +13,9 @@
     border-right: 1px solid rgba(0,0,0,0.4);
     background: #36383F;
     height: 100%;
+}
+
+.dragged-element {
+    position: absolute;
+    z-index: 5;
 }
