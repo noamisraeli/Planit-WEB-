@@ -15,8 +15,7 @@ import Modal from '../Modal';
 import View from '../View'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
-import { WORKSPACE, JOB, QUEUE } from '../../constants/configurations/commonConfiguration';
-import { draggedJobStyle } from '../../constants/style';
+import { WORKSPACE, GANTT_VIEW_GANTT } from '../../constants/configurations/commonConfiguration';
 import { getElementByMouesPosition } from '../../utils/domUtils';
 
 
@@ -71,13 +70,6 @@ class WorkSpace extends Component {
 		if (this.props.splitter.isDragged){
 			this.props.onSplitterUnCkicked()
 		}
-		if (this.props.draggedComponent.isDragged){
-			if (this.props.draggedComponent.compType === JOB){
-				const dropContainer = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false)
-				dropContainer === (undefined || []) ? alert("You cant drop it here !") : alert("You just dropped it in queue id: " + dropContainer.id)
-			}			
-			this.props.onElementDragEnd()
-		}
 	}
 
 	onMouseMove = e => {
@@ -103,11 +95,11 @@ class WorkSpace extends Component {
 			})
 		}
 		if(this.props.draggedComponent.isDragged){
-
+			if (!getElementByMouesPosition(e.pageX, e.pageY, [GANTT_VIEW_GANTT], false)){
 			this.props.onElementDragOver({
 				left: e.pageX -  this.props.draggedComponent.mouseRelativePosition.x,
 				top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
-			})
+			})}
 		}
 	}
 	
@@ -127,9 +119,6 @@ class WorkSpace extends Component {
 				ref={this.DOMElement}
 			>
 			<Modal />
-			<div className="dragged-element" style={{...this.props.draggedComponent.style, display: this.props.draggedComponent.isDragged ? "block": draggedJobStyle.display}}>
-
-			</div>
 			{this.props.views.map((view, index) => {
 						let firstView = this.props.views[index - 1];
 						let firstIndex = index - 1;

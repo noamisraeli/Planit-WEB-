@@ -17,7 +17,9 @@ import {
     JOB_SELECT,
     JOB_DRAG_START,
     ELEMENT_DRAG_OVER,
-    ELEMENT_DRAG_END
+    ELEMENT_DRAG_END,
+    JOB_DRAG_OVER,
+    JOB_DROP
 
     
 } from '../constants/actionTypes';
@@ -204,6 +206,24 @@ export default (state={}, action) =>{
                             id: action.payload.jobId,
                             style: action.payload.style,
                             mouseRelativePosition: action.payload.mouseRelativePosition
+                }
+            }
+        case JOB_DRAG_OVER:
+            return {
+                ...state,
+                draggedComponent: {
+                    ...state.draggedComponent,
+                    style: {
+                        ...state.draggedComponent.style,
+                        ...action.payload.style
+                    }
+                }
+            }
+        case JOB_DROP:
+            return {
+                ...state,
+                draggedComponent: {
+                    isDragged: false
                 }
             }
         case ELEMENT_DRAG_END:

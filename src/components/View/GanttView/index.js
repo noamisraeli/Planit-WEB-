@@ -5,14 +5,16 @@ import {
     GANTT_VIEW_UNLOADED,
     SCROLL_CHANGED,
     RESOLUTION_CHANGED,
-    JOB_DRAG_OVER
+    JOB_DRAG_OVER,
+    JOB_DROP
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
 import Queue from './Queue';
 import '../View.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle} from '../../../constants/style';
-import { JOB } from '../../../constants/configurations/commonConfiguration';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle} from '../../../constants/style';
+import { JOB, QUEUE } from '../../../constants/configurations/commonConfiguration';
+import { getElementByMouesPosition } from '../../../utils/domUtils';
 
 const mapStateToProps = (state, ownProps) => ({
     startTime: state.workspace.startTime,
@@ -35,7 +37,9 @@ const mapDispatchToProps = dispatch => ({
     onUnload: viewId => 
         dispatch({type: GANTT_VIEW_UNLOADED, viewId}),
     onJobDragOver: payload => 
-        dispatch({type: JOB_DRAG_OVER, payload})
+        dispatch({type: JOB_DRAG_OVER, payload}),
+    onJobDrop: payload =>
+        dispatch({type: JOB_DROP, payload})
 })
 
 class GanttView extends React.Component {
@@ -81,20 +85,40 @@ class GanttView extends React.Component {
         }
     }
 
-    onDragOver = (e) => {
+    onJobDrop = (e) => {
         e.preventDefault()
-        let rect = e.target.getBoundingClientRect()
-        const dragPosition = getPixelsAsHour(e.clientX - rect.left, this.props.startTime, this.props.hourAsPixel).toLocaleString()
-        this.props.onJobDragOver({
-            dragState: dragPosition,
-            viewId: this.props.id
-        })
+        if (this.props.draggedComponent.isDragged){
+            this.props.onJobDrop()
+            const dropTarget = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false)
+            if (dropTarget){
+                alert("You just droped your job to queue: " + dropTarget.id)
+            }
+		}
+    }
+
+    onJobDragOver = (e) => {
+        e.preventDefault()
+        if(this.props.draggedComponent.isDragged){
+            this.props.onJobDragOver({
+                style: {
+                    left: e.pageX - this.props.draggedComponent.mouseRelativePosition.x,
+                    top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
+                }
+            })
+        }
     }
 
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container">
+                <div className="gantt-container"
+                    onMouseMove={this.onJobDragOver}
+                    onMouseUp={this.onJobDrop}>
+                    <div className="dragged-element" 
+					style={{
+						...this.props.draggedComponent.style, 
+						display: this.props.draggedComponent.isDragged ? "block": draggedJobStyle.display}}>
+			        </div>
                     <div style={{
                         ...queueHeadersStyle,
                         color: "white"
