@@ -1,7 +1,5 @@
 import React from 'react';
-import { returnAsSeconds } from '../../utils/cssUtils';
 import './Notification.css'
-import { queueHeadersStyle } from '../../constants/style';
 
 class Notification extends React.Component {
     constructor(props){
