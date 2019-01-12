@@ -61,3 +61,8 @@ export const operatorStyle = {
     color: "#dfdfdf",
     height: "100%"
 }
+
+export const ganttNotificationStyle = {
+    left: 30,
+    bottom: 30
+}
