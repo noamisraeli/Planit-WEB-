@@ -10,9 +10,10 @@ import {
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
 import Queue from './Queue';
+import Notification from '../../Notification';
 import '../View.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle} from '../../../constants/style';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle, ganttNotificationStyle} from '../../../constants/style';
 import { JOB, QUEUE } from '../../../constants/configurations/commonConfiguration';
 import { getElementByMouesPosition } from '../../../utils/domUtils';
 
@@ -23,7 +24,7 @@ const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
     selectedJobs: state.workspace.views[ownProps.index].selectedJobs,
-    dragState: state.workspace.views[ownProps.index].dragState,
+    notification: state.workspace.views[ownProps.index].notification,
     draggedComponent: state.workspace.draggedComponent
   });
 
@@ -111,7 +112,7 @@ class GanttView extends React.Component {
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container"
+                <div style={{height:"100%"}}    
                     onMouseMove={this.onJobDragOver}
                     onMouseUp={this.onJobDrop}>
                     <div className="dragged-element" 
@@ -119,6 +120,12 @@ class GanttView extends React.Component {
 						...this.props.draggedComponent.style, 
 						display: this.props.draggedComponent.isDragged ? "block": draggedJobStyle.display}}>
 			        </div>
+                <div className="gantt-container">
+                    <Notification 
+                        content={this.props.notification.content} 
+                        style={{
+                            left: queueHeadersStyle.width + ganttNotificationStyle.left, 
+                            bottom: ganttNotificationStyle.bottom}}/>
                     <div style={{
                         ...queueHeadersStyle,
                         color: "white"
@@ -164,7 +171,8 @@ class GanttView extends React.Component {
                     }     
                 )}
                 </div>
-            </div>  
+            </div> 
+            </div>
         )
     }
     return null

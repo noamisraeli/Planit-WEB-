@@ -104,7 +104,8 @@ export default (state={}, action) =>{
             return {
                 views: state.views.map((view) => {
                     if (view.id === action.payload.viewId){
-                        view.startTimeView = action.payload.newState
+                        view.startTimeView = action.payload.newState;
+                        view.notification.content = action.payload.newState.toLocaleString()
                     }
                     return view
                 }
