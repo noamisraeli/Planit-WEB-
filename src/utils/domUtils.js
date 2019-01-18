@@ -7,3 +7,7 @@ export const getElementByMouesPosition = (x, y, classesAllowed=null, returnMany=
     })
     return returnMany ? elements : elements[0]
 }
+
+export const getRelativePositionInElement = (globalPosition, parentElement) =>{
+    return globalPosition - parentElement.getBoundingClientRect().x
+}
