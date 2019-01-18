@@ -15,7 +15,7 @@ import '../View.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
 import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle, ganttNotificationStyle} from '../../../constants/style';
 import { JOB, QUEUE } from '../../../constants/configurations/commonConfiguration';
-import { getElementByMouesPosition } from '../../../utils/domUtils';
+import { getElementByMouesPosition, getRelativePositionInElement } from '../../../utils/domUtils';
 
 const mapStateToProps = (state, ownProps) => ({
     startTime: state.workspace.startTime,
@@ -49,7 +49,7 @@ class GanttView extends React.Component {
     }
     
     setScrollState(ganttNode){
-        ganttNode.scrollLeft = getHourAsPixels(this.props.startTime, this.props.startTimeView, this.props.hourAsPixel)
+        ganttNode.scrollLeft = getHourAsPixels(this.props.startTime, this.props.startTimeView, this.props.hourAsPixel, true)
     }
     componentDidMount(){
         this.setScrollState(this.refs.gantt)
@@ -67,7 +67,8 @@ class GanttView extends React.Component {
         const newStartTimeView = getPixelsAsHour(
             newState, 
             this.props.startTime, 
-            this.props.hourAsPixel)
+            this.props.hourAsPixel,
+            false)
         this.props.onScroll({
             newState: newStartTimeView,
             viewId: this.props.id
@@ -100,11 +101,20 @@ class GanttView extends React.Component {
     onJobDragOver = (e) => {
         e.preventDefault()
         if(this.props.draggedComponent.isDragged){
+            const queueElement = getElementByMouesPosition(e.clientX, e.clientY, [QUEUE], false);
+            const hoveredView = getElementByMouesPosition(e.pageX, e.pageY, ["view-container"], false);
+            let notificationContent = this.props.notification.content;
+            if (queueElement !== undefined){
+                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
+                notificationContent = positionInQueue ? getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel).toLocaleString() : this.props.notification.content
+            }
             this.props.onJobDragOver({
                 style: {
                     left: e.pageX - this.props.draggedComponent.mouseRelativePosition.x,
                     top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
-                }
+                },
+                hoveredViewId: hoveredView !== undefined ? Number(hoveredView.id): null,
+                notificationContent: notificationContent
             })
         }
     }
@@ -114,12 +124,13 @@ class GanttView extends React.Component {
         return (
                 <div style={{height:"100%"}}    
                     onMouseMove={this.onJobDragOver}
-                    onMouseUp={this.onJobDrop}>
-                    <div className="dragged-element" 
-					style={{
-						...this.props.draggedComponent.style, 
-						display: this.props.draggedComponent.isDragged ? "block": draggedJobStyle.display}}>
-			        </div>
+                    onMouseUp={this.onJobDrop}
+                    id={this.props.id}>
+                    <div className="dragged-element"
+                        style={{
+                            ...this.props.draggedComponent.style, 
+                            display: this.props.draggedComponent.isDragged && this.props.draggedComponent.sourceViewId === this.props.id ? "block": draggedJobStyle.display}}>
+                    </div>
                 <div className="gantt-container">
                     <Notification 
                         content={this.props.notification.content} 
@@ -165,7 +176,7 @@ class GanttView extends React.Component {
                             endTime={this.props.endTime}
                             selectedJobs={this.props.selectedJobs}             
                             draggedJobID={this.props.draggedComponent.compType === JOB 
-                                                && this.props.draggedComponent.viewId === this.props.id 
+                                                && this.props.draggedComponent.sourceViewId === this.props.id 
                                                 ? this.props.draggedComponent.id : null}/>
                             )
                     }     

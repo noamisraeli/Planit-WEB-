@@ -203,7 +203,7 @@ export default (state={}, action) =>{
                 draggedComponent : {
                             compType: JOB,
                             isDragged: true,
-                            viewId: action.payload.viewId,
+                            sourceViewId: action.payload.viewId,
                             id: action.payload.jobId,
                             style: action.payload.style,
                             mouseRelativePosition: action.payload.mouseRelativePosition
@@ -218,7 +218,13 @@ export default (state={}, action) =>{
                         ...state.draggedComponent.style,
                         ...action.payload.style
                     }
-                }
+                },
+                views : state.views.map(view => {
+                    if(view.id === action.payload.hoveredViewId){
+                        view.notification.content = action.payload.notificationContent
+                    }
+                    return view
+                })
             }
         case JOB_DROP:
             return {
