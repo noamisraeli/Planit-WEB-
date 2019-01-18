@@ -79,6 +79,7 @@ class View extends React.Component {
         return (
             <div 
                 className="view-container" 
+                id={this.props.id}
                 style={{
                     width: this.props.width + '%',
                     height: this.props.height
