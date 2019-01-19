@@ -12,6 +12,7 @@ import {connect} from 'react-redux'
 import Queue from './Queue';
 import Notification from '../../Notification';
 import '../View.css';
+import '../GanttView/GanttView.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
 import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle, ganttNotificationStyle} from '../../../constants/style';
 import { JOB, QUEUE } from '../../../constants/configurations/commonConfiguration';

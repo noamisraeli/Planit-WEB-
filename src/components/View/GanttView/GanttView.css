@@ -1,0 +1,10 @@
+.gantt-container {
+    height: 100%;
+    position: relative;
+}
+.gantt-view-gantt {
+    overflow-x: scroll;
+    height: 100%;
+    position: relative;
+    background-color: #1D1E22;
+}
