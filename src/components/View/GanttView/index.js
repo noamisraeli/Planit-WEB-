@@ -89,13 +89,15 @@ class GanttView extends React.Component {
 
     onJobDrop = (e) => {
         e.preventDefault()
-        const queueElement = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false);
-        if (this.props.draggedComponent.isDragged && queueElement){
-            const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
-            const dropedTimeStamp = getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel, true)     
-            alert("You just droped your job to queue: " + queueElement.id + " in position: " + dropedTimeStamp)
+        if (this.props.draggedComponent.isDragged){
+            const queueElement = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false);
+            if (queueElement){
+                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
+                const dropedTimeStamp = getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel, true)     
+                alert("You just droped your job to queue: " + queueElement.id + " in position: " + dropedTimeStamp)
+            }
+            this.props.onJobDrop()
         }
-        this.props.onJobDrop()
     }
 
     onJobDragOver = (e) => {

@@ -50,7 +50,7 @@ const Job = props => {
                 border: jobStyle.border,
                 borderRadius: jobStyle.borderRadius,
                 boxShadow: jobStyle.boxShadow
-        }})}, 500);
+        }})}, 300);
     }
     const onClick = (e) => {
         clearTimeout(mouseTimeout); 
