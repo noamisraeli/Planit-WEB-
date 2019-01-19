@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch({type: QUEUE_FILTER_NAME_CHANGE, payload})
 })
 
-class View extends React.Component {
+class ViewContainer extends React.Component {
     
     QueuesFilterFunction(queue){
         if(queue.additionalParams.title.toLocaleLowerCase()
@@ -125,4 +125,4 @@ class View extends React.Component {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(View)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewContainer)

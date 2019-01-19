@@ -12,7 +12,7 @@ import {
 	ELEMENT_DRAG_END
 } from '../../constants/actionTypes';
 import Modal from '../Modal';
-import View from '../View'
+import ViewContainer from '../View/ViewContainer'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
 import { WORKSPACE, GANTT_VIEW_GANTT } from '../../constants/configurations/commonConfiguration';
@@ -133,7 +133,7 @@ class WorkSpace extends Component {
 										firstIndex={firstIndex}
 										secondIndex={index}
 										/>    
-								<View
+								<ViewContainer
 										key={index}
 										id={view.id}
 										index={index}
