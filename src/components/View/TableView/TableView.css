@@ -1,0 +1,10 @@
+.table-container {
+    height: 100%;
+    position: relative;
+}
+.table-view-table {
+    overflow-y: scroll;
+    width: 100%;
+    position: relative;
+    background-color: #1D1E22;
+}
