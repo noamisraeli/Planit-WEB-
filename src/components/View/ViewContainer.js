@@ -1,6 +1,6 @@
 import React from 'react';
 import GanttView from './GanttView'
-import {GANTT_VIEW} from  '../../constants/viewTypes'
+import {GANTT_VIEW, TABLE_VIEW} from  '../../constants/viewTypes'
 import './View.css';
 import {connect} from 'react-redux';
 import {  
@@ -13,6 +13,7 @@ import { viewHeaderStyle } from '../../constants/style';
 import { returnAsCalcFunction } from '../../utils/cssUtils';
 import Operator from './Operator';
 import { QUEUE_NAME_FILTER_PLACEHOLDER } from '../../constants/configurations/viewConfiguration';
+import TableView from './TableView';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -50,6 +51,12 @@ class ViewContainer extends React.Component {
                             index={props.index} 
                             jobs={props.jobs}
                             queues={props.queues.filter((queue) => this.QueuesFilterFunction(queue))}/> 
+            case TABLE_VIEW:
+                return <TableView 
+                            id={props.id}
+                            index={props.index}
+                            jobs={props.jobs}
+                            queues={props.queues.filter((queue) => this.QueuesFilterFunction(queue))}/>
             default:
                 return <GanttView {...props} />
         }

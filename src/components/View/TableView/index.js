@@ -10,14 +10,37 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 class TableView extends React.Component {
-    render(){
-        return (
-            <div className="table-container">
-                <div className="tabble-view-table">
 
-                </div>
+    static defaultProps = {
+        tableHeaders: ["Job id", "Job description", "Order id", "Queue id", "Quantity", "Start time", "End time"]
+    }
+
+    render(){
+        if(this.props.jobs){
+        return (
+            <div className="table-view">
+                <table className="table-view-container">
+                    <tr className="table-view-container-row">
+                        {this.props.tableHeaders.map(headerName => {
+                            return <th className="table-view-container-row-cell">{headerName}</th>
+                        })}
+                    </tr>
+                    {this.props.jobs.map(job => {
+                        const {description, quantity, order} = job.additionalParams;
+                        const queueId = job.dependencies.jobQueue;
+                        const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]
+                        return (
+                            <tr className="table-view-container-row">
+                                {row.map(cellContent => {
+                                    return <td className="table-view-container-row-cell content">{cellContent}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
+                </table>
             </div>
         )
+        }
     }
 }
 
