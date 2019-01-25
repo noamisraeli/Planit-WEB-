@@ -7,17 +7,17 @@ const KeyValueTable = props => {
         keyValueArray
     } = props;
     return (
-        <table>
+        <table className="key-value-table">
             <tbody>
-                <tr>
-                    <th>id</th>
-                    <th>{id}</th>
+                <tr className="key-value-table-row">
+                    <th className="key-value-table-header">id</th>
+                    <th className="key-value-table-header">{id}</th>
                 </tr>
                 {keyValueArray.map((row, index) => {
                     return (
-                        <tr key={index}>
-                            <td>{row.key}</td>
-                            <td>{row.value}</td>
+                        <tr className="key-value-table-row" key={index}>
+                            <td className="key-value-table-cell">{row.key}</td>
+                            <td className="key-value-table-cell">{row.value}</td>
                         </tr>
                     )
                 })}

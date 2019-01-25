@@ -1,15 +1,15 @@
-table {
+.key-value-table {
     font-family: "Segoe UI" ,Arial,sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
   
-  td, th {
+  .key-value-table-cell, .key-value-table-header {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
   }
   
-  tr:nth-child(even) {
+  .key-value-table-row:nth-child(even) {
     background-color: #dddddd;
   }
