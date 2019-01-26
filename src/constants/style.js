@@ -66,3 +66,11 @@ export const ganttNotificationStyle = {
     left: 30,
     bottom: 30
 }
+
+export const jobRowStyle = { 
+    backgroundColor: "rgb(85, 85, 85)"
+}
+
+export const selectedJobRowsStyle = {
+    backgroundColor: "orange"
+}
