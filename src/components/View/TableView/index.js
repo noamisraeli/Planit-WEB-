@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import './TableView.css';
+import JobRow from './JobRow';
+import { jobRowStyle, selectedJobRowsStyle } from '../../../constants/style';
 
 const mapStateToProps = (state, ownProps) => ({
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
@@ -28,13 +30,17 @@ class TableView extends React.Component {
                     {this.props.jobs.map(job => {
                         const {description, quantity, order} = job.additionalParams;
                         const queueId = job.dependencies.jobQueue;
-                        const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]
+                        const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]    
+                        job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobRowsStyle.backgroundColor : jobRowStyle.backgroundColor;
                         return (
-                            <tr className="table-view-container-row">
-                                {row.map(cellContent => {
-                                    return <td className="table-view-container-row-cell content">{cellContent}</td>
-                                })}
-                            </tr>
+                            <JobRow 
+                                id={job.id}
+                                rowContent={row}
+                                additionalParams={job.additionalParams}
+                                viewId={this.props.id}
+                                startTime={job.startTime}
+                                endTime={job.endTime}
+                                />
                         )
                     })}
                 </table>
