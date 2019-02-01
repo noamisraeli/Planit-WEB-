@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import './TableView.css';
-import JobRow from './JobRow';
+import Job from '../Job';
 import { jobRowStyle, selectedJobRowsStyle } from '../../../constants/style';
+import { TABLE_JOB } from '../../../constants/configurations/commonConfiguration';
 
 const mapStateToProps = (state, ownProps) => ({
     freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
@@ -22,27 +23,31 @@ class TableView extends React.Component {
         return (
             <div className="table-view">
                 <table className="table-view-container">
-                    <tr className="table-view-container-row">
-                        {this.props.tableHeaders.map(headerName => {
-                            return <th className="table-view-container-row-cell">{headerName}</th>
+                    <tbody>
+                        <tr className="table-view-container-row">
+                            {this.props.tableHeaders.map((headerName, index) => {
+                                return <th key={index} className="table-view-container-row-cell">{headerName}</th>
+                            })}
+                        </tr>
+                        {this.props.jobs.map((job, index) => {
+                            const {description, quantity, order} = job.additionalParams;
+                            const queueId = job.dependencies.jobQueue;
+                            const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]    
+                            job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobRowsStyle.backgroundColor : jobRowStyle.backgroundColor;
+                            return (
+                                <Job
+                                    type={TABLE_JOB} 
+                                    id={job.id}
+                                    key={index}
+                                    rowContent={row}
+                                    additionalParams={job.additionalParams}
+                                    viewId={this.props.id}
+                                    startTime={job.startTime}
+                                    endTime={job.endTime}
+                                    />
+                            )
                         })}
-                    </tr>
-                    {this.props.jobs.map(job => {
-                        const {description, quantity, order} = job.additionalParams;
-                        const queueId = job.dependencies.jobQueue;
-                        const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]    
-                        job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobRowsStyle.backgroundColor : jobRowStyle.backgroundColor;
-                        return (
-                            <JobRow 
-                                id={job.id}
-                                rowContent={row}
-                                additionalParams={job.additionalParams}
-                                viewId={this.props.id}
-                                startTime={job.startTime}
-                                endTime={job.endTime}
-                                />
-                        )
-                    })}
+                    </tbody>
                 </table>
             </div>
         )
