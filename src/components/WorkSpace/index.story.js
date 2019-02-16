@@ -1,4 +1,4 @@
-import {GANTT_VIEW} from '../../constants/viewTypes'
+import {GANTT_VIEW, TABLE_VIEW} from '../../constants/viewTypes'
 import { GO_TO_LAST_JOB, GO_TO_FIRST_JOB } from '../../constants/actionTypes';
 import { GO_TO_LAST_JOB_TITLE, GO_TO_FIRST_JOB_TITLE } from '../../constants/configurations/operatorConfiguration';
 import { GANNT_VIEW_DESCRIPTION } from '../../constants/configurations/viewConfiguration';
@@ -168,7 +168,7 @@ const viewState = {
         },
         {
             id: 2,
-            type: GANTT_VIEW,
+            type: TABLE_VIEW,
             description: GANNT_VIEW_DESCRIPTION,
             startTimeView: new Date(2018, 10, 28, 1),
             selectedJobs: [],

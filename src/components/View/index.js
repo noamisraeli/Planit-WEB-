@@ -1,128 +1,126 @@
 import React from 'react';
-import GanttView from './GanttView'
-import {GANTT_VIEW} from  '../../constants/viewTypes'
 import './View.css';
+import { draggedJobStyle } from '../../constants/style';
 import {connect} from 'react-redux';
-import {  
-    VIEW_LOADED,
-    QUEUE_FILTER_NAME_CHANGE,
-    GO_TO_LAST_JOB,
-    GO_TO_FIRST_JOB
-} from '../../constants/actionTypes';
-import { viewHeaderStyle } from '../../constants/style';
-import { returnAsCalcFunction } from '../../utils/cssUtils';
-import Operator from './Operator';
-import { QUEUE_NAME_FILTER_PLACEHOLDER } from '../../constants/configurations/viewConfiguration';
-
+import { JOB_DRAG_OVER, JOB_DROP } from '../../constants/actionTypes';
+import { GANTT_VIEW, TABLE_VIEW } from '../../constants/viewTypes';
+import GanttView from './GanttView';
+import TableView from './TableView';
+import { getElementByMouesPosition, getRelativePositionInElement } from '../../utils/domUtils';
+import { QUEUE } from '../../constants/configurations/commonConfiguration';
+import { getPixelsAsHour } from '../../utils/ganttUtils';
 
 const mapStateToProps = (state, ownProps) => ({
-    jobs : state.database.jobs,
-    queues: state.database.queues,
-    width: state.workspace.views[ownProps.index].sizes.widthPercent,
-    height: state.workspace.views[ownProps.index].sizes.height,
-    freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
-    operators: state.workspace.views[ownProps.index].operators,
-    draggedComponent: state.workspace.views[ownProps.index].draggedComponent
+    selectedJobs: state.workspace.views[ownProps.index].selectedJobs,
+    draggedComponent: state.workspace.draggedComponent,
+    notification: state.workspace.views[ownProps.index].notification,
+    startTime: state.workspace.startTime,
+    endTime: state.workspace.endTime,
+    hourAsPixel: state.workspace.views[ownProps.index].sizes.hourAsPixel
 })
 
 const mapDispatchToProps = dispatch => ({
-    onLoadEnd: payload => 
-        dispatch({type: VIEW_LOADED, payload}),
-    onFreeTextFilterChange: payload => 
-        dispatch({type: QUEUE_FILTER_NAME_CHANGE, payload})
+    onJobDragOver: payload => 
+        dispatch({type: JOB_DRAG_OVER, payload}),
+    onJobDrop: payload =>
+        dispatch({type: JOB_DROP, payload})
 })
 
-class View extends React.Component {
-    
-    QueuesFilterFunction(queue){
-        if(queue.additionalParams.title.toLocaleLowerCase()
-                .includes(this.props.freeTextFilter.toLocaleLowerCase())){
-            return true
-        } 
-        return false
-    }
 
-    _getViewByType = (type, props) => {
-        switch (type){
-            case GANTT_VIEW:
-                return <GanttView 
-                            id={props.id}
-                            index={props.index} 
-                            jobs={props.jobs}
-                            queues={props.queues.filter((queue) => this.QueuesFilterFunction(queue))}/> 
-            default:
-                return <GanttView {...props} />
+class View extends React.Component {
+
+    _cleanDraggedElements = () => {
+        const draggedElementContainers = document.getElementsByClassName("dragged-element");
+        for (let draggedElementContainer of draggedElementContainers){
+            if(draggedElementContainer.lastChild){
+                draggedElementContainer.removeChild(draggedElementContainer.lastChild)
+            }
         }
     }
 
-    onFreeTextInputChange = (e) => {
-        this.props.onFreeTextFilterChange({
-            viewId: this.props.id,
-            newValue: e.target.value
-        })
+    onJobDrop = (e) => {
+        e.preventDefault()
+        if (this.props.draggedComponent.isDragged){
+            this._cleanDraggedElements()
+            const queueElement = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false);
+            if (queueElement){
+                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
+                const dropedTimeStamp = getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel, true)     
+                alert("You just droped your job to queue: " + queueElement.id + " in position: " + dropedTimeStamp)
+            }
+            this.props.onJobDrop()
+        }
     }
 
-    _getAdditionalParamsByAction = (action) => {
-        switch(action){
-            case GO_TO_FIRST_JOB:
-                return {firstJob:this.props.jobs[0]}
-            case GO_TO_LAST_JOB:
-                return {lastJob:this.props.jobs[this.props.jobs.length - 1]}
+    onJobDragOver = (e) => {
+        e.preventDefault()
+        if(this.props.draggedComponent.isDragged){
+            const queueElement = getElementByMouesPosition(e.clientX, e.clientY, [QUEUE], false);
+            const hoveredView = getElementByMouesPosition(e.pageX, e.pageY, ["view-container"], false);
+            let notificationContent = this.props.notification.content;
+            if (queueElement !== undefined){
+                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
+                notificationContent = positionInQueue ? getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel).toLocaleString() : this.props.notification.content
+            }
+            this.props.onJobDragOver({
+                style: {
+                    left: e.pageX - this.props.draggedComponent.mouseRelativePosition.x,
+                    top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
+                },
+                hoveredViewId: hoveredView !== undefined ? Number(hoveredView.id): null,
+                notificationContent: notificationContent
+            })
+        }
+    }
+
+    getViewByType = (viewType) => {
+
+        switch(viewType){
+            case GANTT_VIEW:
+                return <GanttView 
+                            id={this.props.id}
+                            index={this.props.index}
+                            jobs={this.props.jobs}
+                            queues={this.props.queues}
+                            hourAsPixel={this.props.hourAsPixel} 
+                            startTime={this.props.startTime}
+                            endTime={this.props.endTime}/>
+            case TABLE_VIEW:
+                return <TableView 
+                            id={this.props.id}
+                            index={this.props.index}
+                            jobs={this.props.jobs}/>
             default:
-                return {}
+                return <GanttView 
+                            id={this.props.id}
+                            index={this.props.index}
+                            jobs={this.props.jobs}
+                            queues={this.props.queues}
+                            hourAsPixel={this.props.hourAsPixel} 
+                            startTime={this.props.startTime}
+                            endTime={this.props.endTime}/>
         }
     }
 
     render(){
-        
-        const view = this._getViewByType(this.props.type, this.props)  
+        let draggedElementDisplay = 'none';
+        if (this.props.draggedComponent.isDragged && this.props.draggedComponent.sourceViewId === this.props.id){
+            draggedElementDisplay = this.props.type === TABLE_VIEW  ? "table" : "block";
+        };
+        const viewType = this.props.type;
         return (
-            <div 
-                className="view-container" 
-                id={this.props.id}
-                style={{
-                    width: this.props.width + '%',
-                    height: this.props.height
-                }}>
-                <div className="view-content">
-                <div className="view-header">
-                </div>
-                <div className="view-header">
-                    <div style={{float:"left", height:"100%", paddingLeft:5}}>
-                    <input 
-                            onChange={this.onFreeTextInputChange}
-                            placeholder={QUEUE_NAME_FILTER_PLACEHOLDER}
-                            value={this.props.freeTextFilter}/>
-                    </div>
-                    {this.props.operators.map((operator, index) => {
-                        return (
-                            <Operator
-                                key={index}
-                                action={operator.action}
-                                title={operator.title}
-                                name={operator.name}
-                                type={operator.type}
-                                position={operator.position}
-                                viewId={this.props.id} 
-                                additionalParams={this._getAdditionalParamsByAction(operator.action)}/>                    
-                        )
-                    })}
-                </div>
-                <div className="view-content-container"
+            <div className="view" 
+                onMouseMove={this.onJobDragOver}
+                onMouseUp={this.onJobDrop}>
+                <div className="dragged-element"
                     style={{
-                        height: returnAsCalcFunction(100, "-", viewHeaderStyle.height * 2)
-                    }}>
-                    {view}
+                        ...this.props.draggedComponent.style, 
+                        display: draggedElementDisplay}}>
                 </div>
-                </div>
-                
+                {this.getViewByType(viewType)}
             </div>
-    )
+        )
     }
 }
-
-
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(View)

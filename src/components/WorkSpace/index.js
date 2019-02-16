@@ -12,10 +12,10 @@ import {
 	ELEMENT_DRAG_END
 } from '../../constants/actionTypes';
 import Modal from '../Modal';
-import View from '../View'
+import ViewContainer from '../View/ViewContainer'
 import Splitter from './Splitter';
 import { getWidthById } from '../../utils/cssUtils';
-import { WORKSPACE, GANTT_VIEW_GANTT } from '../../constants/configurations/commonConfiguration';
+import { WORKSPACE, GANTT_VIEW_GANTT, TABLE_VIEW_CONTAINER } from '../../constants/configurations/commonConfiguration';
 import { getElementByMouesPosition } from '../../utils/domUtils';
 
 
@@ -95,7 +95,7 @@ class WorkSpace extends Component {
 			})
 		}
 		if(this.props.draggedComponent.isDragged){
-			if (!getElementByMouesPosition(e.pageX, e.pageY, [GANTT_VIEW_GANTT], false)){
+			if (!getElementByMouesPosition(e.pageX, e.pageY, [GANTT_VIEW_GANTT, TABLE_VIEW_CONTAINER], false)){
 			this.props.onElementDragOver({
 				left: e.pageX -  this.props.draggedComponent.mouseRelativePosition.x,
 				top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
@@ -133,7 +133,7 @@ class WorkSpace extends Component {
 										firstIndex={firstIndex}
 										secondIndex={index}
 										/>    
-								<View
+								<ViewContainer
 										key={index}
 										id={view.id}
 										index={index}

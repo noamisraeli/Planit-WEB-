@@ -1,3 +1,11 @@
+.view {
+    height: 100%;
+}
+
+.dragged-element {
+    z-index: 200;
+}
+
 .view-container {
     float: left;
     transition: 0.1s;
@@ -41,17 +49,6 @@
     overflow: hidden;
 }
 
-.gantt-container {
-    height: 100%;
-    position: relative;
-}
-.gantt-view-gantt {
-    overflow-x: scroll;
-    height: 100%;
-    position: relative;
-    background-color: #1D1E22;
-}
-
 .queue {
     min-height: 30px;
     padding: 6px 0;
@@ -71,12 +68,12 @@
     max-width: 25%;
 }
 
-.job-container {
+.gantt-job-container {
     display: inline-block;
     height: 100%;
 }
 
-.job {
+.gantt-job {
     border: 1px solid black;
     border-radius: 4px;
     height: inherit;

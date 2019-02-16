@@ -5,24 +5,18 @@ import {
     GANTT_VIEW_UNLOADED,
     SCROLL_CHANGED,
     RESOLUTION_CHANGED,
-    JOB_DRAG_OVER,
-    JOB_DROP
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
 import Queue from './Queue';
 import Notification from '../../Notification';
 import '../View.css';
+import '../GanttView/GanttView.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, draggedJobStyle, ganttNotificationStyle} from '../../../constants/style';
-import { JOB, QUEUE } from '../../../constants/configurations/commonConfiguration';
-import { getElementByMouesPosition, getRelativePositionInElement } from '../../../utils/domUtils';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, ganttNotificationStyle} from '../../../constants/style';
+import { JOB} from '../../../constants/configurations/commonConfiguration';
 
 const mapStateToProps = (state, ownProps) => ({
-    startTime: state.workspace.startTime,
-    endTime: state.workspace.endTime,
-    hourAsPixel: state.workspace.views[ownProps.index].sizes.hourAsPixel,
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
-    freeTextFilter: state.workspace.views[ownProps.index].filters.freeTextFilter,
     selectedJobs: state.workspace.views[ownProps.index].selectedJobs,
     notification: state.workspace.views[ownProps.index].notification,
     draggedComponent: state.workspace.draggedComponent
@@ -36,11 +30,7 @@ const mapDispatchToProps = dispatch => ({
     onResolutionChange: payload => 
         dispatch({type: RESOLUTION_CHANGED, payload}),
     onUnload: viewId => 
-        dispatch({type: GANTT_VIEW_UNLOADED, viewId}),
-    onJobDragOver: payload => 
-        dispatch({type: JOB_DRAG_OVER, payload}),
-    onJobDrop: payload =>
-        dispatch({type: JOB_DROP, payload})
+        dispatch({type: GANTT_VIEW_UNLOADED, viewId})
 })
 
 class GanttView extends React.Component {
@@ -87,52 +77,9 @@ class GanttView extends React.Component {
         }
     }
 
-    onJobDrop = (e) => {
-        e.preventDefault()
-        if (this.props.draggedComponent.isDragged){
-            const queueElement = getElementByMouesPosition(e.pageX, e.pageY, [QUEUE], false);
-            if (queueElement){
-                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
-                const dropedTimeStamp = getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel, true)     
-                alert("You just droped your job to queue: " + queueElement.id + " in position: " + dropedTimeStamp)
-            }
-            this.props.onJobDrop()
-        }
-    }
-
-    onJobDragOver = (e) => {
-        e.preventDefault()
-        if(this.props.draggedComponent.isDragged){
-            const queueElement = getElementByMouesPosition(e.clientX, e.clientY, [QUEUE], false);
-            const hoveredView = getElementByMouesPosition(e.pageX, e.pageY, ["view-container"], false);
-            let notificationContent = this.props.notification.content;
-            if (queueElement !== undefined){
-                const positionInQueue = getRelativePositionInElement(e.pageX, queueElement);
-                notificationContent = positionInQueue ? getPixelsAsHour(positionInQueue, this.props.startTime, this.props.hourAsPixel).toLocaleString() : this.props.notification.content
-            }
-            this.props.onJobDragOver({
-                style: {
-                    left: e.pageX - this.props.draggedComponent.mouseRelativePosition.x,
-                    top: e.pageY - this.props.draggedComponent.mouseRelativePosition.y
-                },
-                hoveredViewId: hoveredView !== undefined ? Number(hoveredView.id): null,
-                notificationContent: notificationContent
-            })
-        }
-    }
-
     render(){
         if(this.props.jobs){
         return (
-                <div style={{height:"100%"}}    
-                    onMouseMove={this.onJobDragOver}
-                    onMouseUp={this.onJobDrop}
-                    id={this.props.id}>
-                    <div className="dragged-element"
-                        style={{
-                            ...this.props.draggedComponent.style, 
-                            display: this.props.draggedComponent.isDragged && this.props.draggedComponent.sourceViewId === this.props.id ? "block": draggedJobStyle.display}}>
-                    </div>
                 <div className="gantt-container">
                     <Notification 
                         content={this.props.notification.content} 
@@ -184,7 +131,6 @@ class GanttView extends React.Component {
                     }     
                 )}
                 </div>
-            </div> 
             </div>
         )
     }

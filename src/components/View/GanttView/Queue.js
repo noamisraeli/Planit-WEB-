@@ -1,8 +1,9 @@
 import React from 'react';
 import {QueuePropTypes} from '../../WorkSpace/propTyps'
-import Job from './Job';
+import Job from '../Job';
 import {getHourAsPixels} from '../../../utils/ganttUtils'
 import { queueStyle, selectedJobStyle, draggedJobStyle } from '../../../constants/style';
+import { GANTT_JOB } from '../../../constants/configurations/commonConfiguration';
 
 
 const Queue = props => {
@@ -40,6 +41,7 @@ const Queue = props => {
                 initialTime = job.endTime;
                 return (
                     <Job 
+                        type={GANTT_JOB}
                         id={job.id}
                         key={index}
                         startTime={job.startTime}
