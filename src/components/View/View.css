@@ -1,3 +1,11 @@
+.view {
+    height: 100%;
+}
+
+.dragged-element {
+    z-index: 200;
+}
+
 .view-container {
     float: left;
     transition: 0.1s;
@@ -60,12 +68,12 @@
     max-width: 25%;
 }
 
-.job-container {
+.gantt-job-container {
     display: inline-block;
     height: 100%;
 }
 
-.job {
+.gantt-job {
     border: 1px solid black;
     border-radius: 4px;
     height: inherit;

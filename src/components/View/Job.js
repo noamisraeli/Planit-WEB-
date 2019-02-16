@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL } from '../../constants/actionTypes';
-import { START_TIME, GANTT_JOB, TABLE_JOB, END_TIME } from '../../constants/configurations/commonConfiguration';
+import { START_TIME, GANTT_JOB, TABLE_JOB, END_TIME, JOB } from '../../constants/configurations/commonConfiguration';
 import { PROPS_MODAL_TYPE, JOB_PROPS_TITLE, JOB_PROPS_WIDTH } from '../../constants/configurations/modalConfiguration';
 import './View.css';
-import { jobStyle, jobRowStyle } from '../../constants/style';
 
 const mapDispatchToProps = dispatch => ({
     onDragStart: payload =>
@@ -21,16 +20,19 @@ class Job extends React.Component {
         this.mouseTimeout = null;
     }
 
-    onDragStart = (draggedElementStyle) => (e) => {
-        const rect = e.target.getBoundingClientRect()
+    onDragStart = (e) => {
+        const draggedElement = e.target.classList.contains(JOB) ? e.target : e.target.parentElement;
+        const rect = draggedElement.getBoundingClientRect()
         const mouseRelativePosition =  {
             x: e.pageX - rect.left, 
             y: e.pageY - rect.top
         }
-        const width = e.target.offsetWidth;
-        const height = e.target.offsetHeight;
+        const copyOfDraggedElement = draggedElement.cloneNode(true);
+        const width = draggedElement.offsetWidth;
+        const height = draggedElement.offsetHeight;
         this.mouseTimeout = setTimeout(
             () => {
+                document.getElementsByClassName("dragged-element")[this.props.viewId - 1].append(copyOfDraggedElement);
                 this.props.onDragStart(
                     {
                         jobId: this.props.id, 
@@ -39,10 +41,8 @@ class Job extends React.Component {
                         style:{
                             width: width,
                             height: height,
-                            backgroundColor: this.props.additionalParams.bgColor,
                             left: rect.left,
                             top: rect.top,
-                            ...draggedElementStyle
                         }
                     }
                 )
@@ -79,11 +79,11 @@ class Job extends React.Component {
                 title={this.buildTitle()}
                 onDoubleClick={this.onModalOpen}
                 onClick={this.onClick}
-                onMouseDown={this.onDragStart(jobStyle)}
-                className="job-container"
+                onMouseDown={this.onDragStart}
+                className="gantt-job-container"
                 style={this.props.style}
                 >
-                <div className="job"
+                <div className="gantt-job job"
                     style={{
                         backgroundColor: this.props.additionalParams.bgColor,
                         display: this.props.additionalParams.display,
@@ -97,10 +97,9 @@ class Job extends React.Component {
 
     renderTableJob = () => {
         return (
-            <tr className="table-view-container-row"
-                style={{cursor:"pointer"}}
+            <tr className="table-view-container-row job"
                 onClick={this.onClick}
-                onMouseDown={this.onDragStart(jobRowStyle)}
+                onMouseDown={this.onDragStart}
                 onDoubleClick={this.onModalOpen}>
                 {this.props.rowContent.map((cellContent, index) => {
                     return <td

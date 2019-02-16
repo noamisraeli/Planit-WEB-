@@ -1,6 +1,4 @@
 import React from 'react';
-import GanttView from './GanttView'
-import {GANTT_VIEW, TABLE_VIEW} from  '../../constants/viewTypes'
 import './View.css';
 import {connect} from 'react-redux';
 import {  
@@ -13,7 +11,7 @@ import { viewHeaderStyle } from '../../constants/style';
 import { returnAsCalcFunction } from '../../utils/cssUtils';
 import Operator from './Operator';
 import { QUEUE_NAME_FILTER_PLACEHOLDER } from '../../constants/configurations/viewConfiguration';
-import TableView from './TableView';
+import View from '.';
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -43,25 +41,6 @@ class ViewContainer extends React.Component {
         return false
     }
 
-    _getViewByType = (type, props) => {
-        switch (type){
-            case GANTT_VIEW:
-                return <GanttView 
-                            id={props.id}
-                            index={props.index} 
-                            jobs={props.jobs}
-                            queues={props.queues.filter((queue) => this.QueuesFilterFunction(queue))}/> 
-            case TABLE_VIEW:
-                return <TableView 
-                            id={props.id}
-                            index={props.index}
-                            jobs={props.jobs}
-                            queues={props.queues.filter((queue) => this.QueuesFilterFunction(queue))}/>
-            default:
-                return <GanttView {...props} />
-        }
-    }
-
     onFreeTextInputChange = (e) => {
         this.props.onFreeTextFilterChange({
             viewId: this.props.id,
@@ -81,8 +60,6 @@ class ViewContainer extends React.Component {
     }
 
     render(){
-        
-        const view = this._getViewByType(this.props.type, this.props)  
         return (
             <div 
                 className="view-container" 
@@ -119,7 +96,12 @@ class ViewContainer extends React.Component {
                     style={{
                         height: returnAsCalcFunction(100, "-", viewHeaderStyle.height * 2)
                     }}>
-                    {view}
+                    <View 
+                        id={this.props.id}
+                        index={this.props.index}
+                        type={this.props.type}
+                        jobs={this.props.jobs}
+                        queues={this.props.queues.filter(queue => this.QueuesFilterFunction(queue))}/>
                 </div>
                 </div>
                 

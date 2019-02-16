@@ -6,3 +6,4 @@ export const GANTT_JOB = "GANTT_JOB";
 export const TABLE_JOB = "TABLE_JOB";
 export const QUEUE = "queue";
 export const GANTT_VIEW_GANTT = "gantt-view-gantt";
+export const TABLE_VIEW_CONTAINER = "table-view-container";

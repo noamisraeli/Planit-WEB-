@@ -29,7 +29,7 @@ class TableView extends React.Component {
                                 return <th key={index} className="table-view-container-row-cell">{headerName}</th>
                             })}
                         </tr>
-                        {this.props.jobs.map((job, index) => {
+                        {this.props.jobs.filter(job => job.id !== this.props.draggedComponent.id).map((job, index) => {
                             const {description, quantity, order} = job.additionalParams;
                             const queueId = job.dependencies.jobQueue;
                             const row = [job.id, description, order, queueId, quantity, job.startTime.toLocaleString(), job.endTime.toLocaleString()]    
