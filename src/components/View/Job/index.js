@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL } from '../../../constants/actionTypes';
 import { START_TIME, GANTT_JOB, TABLE_JOB, END_TIME, JOB } from '../../../constants/configurations/commonConfiguration';
 import { PROPS_MODAL_TYPE, JOB_PROPS_TITLE, JOB_PROPS_WIDTH } from '../../../constants/configurations/modalConfiguration';
-import './View.css';
+import '../View.css';
 
 const mapDispatchToProps = dispatch => ({
     onDragStart: payload =>

@@ -7,16 +7,17 @@ import {
     RESOLUTION_CHANGED,
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
-import Queue from '../Queue';
 import Notification from '../../Notification';
 import '../View.css';
 import '../GanttView/GanttView.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, queueContainerStyle, ganttNotificationStyle} from '../../../constants/style';
-import { JOB} from '../../../constants/configurations/commonConfiguration';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, queueContainerStyle, ganttNotificationStyle, draggedJobStyle, selectedJobStyle} from '../../../constants/style';
+import { JOB, GANTT_JOB} from '../../../constants/configurations/commonConfiguration';
 import QueueHeaderContainer from '../Queue/QueueHeaderContainer';
 import QueueHeader from '../Queue/QueueHeader';
 import QueueContainer from '../Queue/QueueContainer';
+import Queue from '../Queue';
+import Job from '../Job';
 
 const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
@@ -82,60 +83,80 @@ class GanttView extends React.Component {
 
     render(){
         if(this.props.jobs){
-        return (
-                <div className="gantt-view">
-                    <Notification 
-                        content={this.props.notification.content} 
-                        style={{
-                            left: queueHeadersStyle.width + ganttNotificationStyle.left, 
-                            bottom: ganttNotificationStyle.bottom}}/>
-                    <QueueHeaderContainer
-                        style={{...queueHeadersStyle,
-                        }}>
-                        {this.props.queues.map((queue, index) => {
-                            return (
-                                <QueueHeader 
-                                    key={index}
-                                    style={{
-                                        height: queueStyle.height,
-                                        ...queueHeaderStyle
-                                    }}>
-                                    {queue.additionalParams.title}
-                                </QueueHeader> 
-                            )
-                        })}
-                    </QueueHeaderContainer>
-                    <QueueContainer 
-                        style={{
-                            ...queueContainerStyle
-                        }}
-                        onScroll={this.handleScroll}
-                        onWheel={this.handleWheel}
-                        ref="gantt">
-                        {this.props.queues.map((queue, index) =>{
-                        const queueJobs = this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id})
-                        return (
-                            <Queue
-                            onDragOver={this.onDragOver}
-                            key={index}
-                            id={queue.id}
-                            viewId={this.props.id}
-                            jobs={queueJobs}
-                            hourAsPixel={this.props.hourAsPixel}
-                            startTime={this.props.startTime}
-                            endTime={this.props.endTime}
-                            selectedJobs={this.props.selectedJobs}             
-                            draggedJobID={this.props.draggedComponent.compType === JOB 
+            return (
+                    <div className="gantt-view">
+                        <Notification 
+                            content={this.props.notification.content} 
+                            style={{
+                                left: queueHeadersStyle.width + ganttNotificationStyle.left, 
+                                bottom: ganttNotificationStyle.bottom}}/>
+                        <QueueHeaderContainer
+                            style={{...queueHeadersStyle,
+                            }}>
+                            {this.props.queues.map((queue, index) => {
+                                return (
+                                    <QueueHeader 
+                                        key={index}
+                                        style={{
+                                            height: queueStyle.height,
+                                            ...queueHeaderStyle
+                                        }}>
+                                        {queue.additionalParams.title}
+                                    </QueueHeader> 
+                                )
+                            })}
+                        </QueueHeaderContainer>
+                        <QueueContainer 
+                            style={{
+                                ...queueContainerStyle
+                            }}
+                            onScroll={this.handleScroll}
+                            onWheel={this.handleWheel}
+                            ref="gantt">
+                            {this.props.queues.map((queue, index) =>{
+                                const draggedJobID = this.props.draggedComponent.compType === JOB 
                                                 && this.props.draggedComponent.sourceViewId === this.props.id 
-                                                ? this.props.draggedComponent.id : null}/>
-                            )})
-                        }
-                    </QueueContainer>          
-            </div>
-        )
+                                                ? this.props.draggedComponent.id : null;
+                                const queueWidth = getHourAsPixels(this.props.endTime, this.props.startTime, this.props.hourAsPixel);
+                                return (
+                                    <Queue
+                                        onDragOver={this.onDragOver}
+                                        key={index}
+                                        id={queue.id}
+                                        style={{
+                                            width: queueWidth,
+                                            ...queueStyle
+                                        }}>
+                                \       {this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id}).map((job, index) => {
+                                            const initialTime = job.endTime;
+                                            const position = getHourAsPixels(job.startTime, initialTime, this.props.hourAsPixel);
+                                            const jobWidth = getHourAsPixels(job.endTime, job.startTime, this.props.hourAsPixel);
+                                            const jobStyle = {
+                                                width: jobWidth,
+                                                marginLeft: position
+                                            };
+                                            job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor
+                                            job.additionalParams.display = draggedJobID === job.id ? draggedJobStyle.display: jobStyle.display;
+                                            return (
+                                                <Job
+                                                    type={GANTT_JOB}
+                                                    id={job.id}
+                                                    key={index} 
+                                                    viewId={this.props.id}
+                                                    dependencies={job.dependencies}
+                                                    additionalParams={job.additionalParams}
+                                                    style={jobStyle}
+                                                />)
+                                        } )}
+                                    </Queue>
+                                )})
+                            }
+                        </QueueContainer>          
+                </div>
+            )
+        }
+        return null
     }
-    return null
-}
 
 }
 
