@@ -12,10 +12,11 @@ import Notification from '../../Notification';
 import '../View.css';
 import '../GanttView/GanttView.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, ganttNotificationStyle} from '../../../constants/style';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, queueContainerStyle, ganttNotificationStyle} from '../../../constants/style';
 import { JOB} from '../../../constants/configurations/commonConfiguration';
 import QueueHeaderContainer from '../Queue/QueueHeaderContainer';
 import QueueHeader from '../Queue/QueueHeader';
+import QueueContainer from '../Queue/QueueContainer';
 
 const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
@@ -103,18 +104,16 @@ class GanttView extends React.Component {
                                 </QueueHeader> 
                             )
                         })}
-                    </QueueHeaderContainer>               
-                    <div 
-                        className="gantt-view-container"
+                    </QueueHeaderContainer>
+                    <QueueContainer 
                         style={{
-                        ...ganttStyle
-                    }}
+                            ...queueContainerStyle
+                        }}
                         onScroll={this.handleScroll}
                         onWheel={this.handleWheel}
-                        ref="gantt"
-                    >
-                {this.props.queues.map((queue, index) =>{
-                    const queueJobs = this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id})
+                        ref="gantt">
+                        {this.props.queues.map((queue, index) =>{
+                        const queueJobs = this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id})
                         return (
                             <Queue
                             onDragOver={this.onDragOver}
@@ -129,10 +128,9 @@ class GanttView extends React.Component {
                             draggedJobID={this.props.draggedComponent.compType === JOB 
                                                 && this.props.draggedComponent.sourceViewId === this.props.id 
                                                 ? this.props.draggedComponent.id : null}/>
-                            )
-                    }     
-                )}
-                </div>
+                            )})
+                        }
+                    </QueueContainer>          
             </div>
         )
     }

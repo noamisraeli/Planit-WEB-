@@ -30,8 +30,12 @@ export const queueHeaderStyle = {
     fontWeight: 600
 }
 
-export const ganttStyle = {
-    width: "calc(" + 100 + "% - " + queueHeadersStyle.width + "px)"
+export const queueContainerStyle = {
+    width: "calc(" + 100 + "% - " + queueHeadersStyle.width + "px)",
+    overflowX: "scroll",
+    height: "100%",
+    position: "relative",
+    backgroundColor: "#1D1E22"
 }
 
 export const viewHeaderStyle = {
