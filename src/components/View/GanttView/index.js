@@ -7,13 +7,15 @@ import {
     RESOLUTION_CHANGED,
 } from '../../../constants/actionTypes';
 import {connect} from 'react-redux'
-import Queue from './Queue';
+import Queue from '../Queue';
 import Notification from '../../Notification';
 import '../View.css';
 import '../GanttView/GanttView.css';
 import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
 import { queueStyle, queueHeaderStyle, queueHeadersStyle, ganttStyle, ganttNotificationStyle} from '../../../constants/style';
 import { JOB} from '../../../constants/configurations/commonConfiguration';
+import QueueHeaderContainer from '../Queue/QueueHeaderContainer';
+import QueueHeader from '../Queue/QueueHeader';
 
 const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
@@ -80,30 +82,30 @@ class GanttView extends React.Component {
     render(){
         if(this.props.jobs){
         return (
-                <div className="gantt-container">
+                <div className="gantt-view">
                     <Notification 
                         content={this.props.notification.content} 
                         style={{
                             left: queueHeadersStyle.width + ganttNotificationStyle.left, 
                             bottom: ganttNotificationStyle.bottom}}/>
-                    <div style={{
-                        ...queueHeadersStyle,
-                        color: "white"
-                    }}>
+                    <QueueHeaderContainer
+                        style={{...queueHeadersStyle,
+                        }}>
                         {this.props.queues.map((queue, index) => {
                             return (
-                                <div style={{
-                                    height: queueStyle.height,
-                                    ...queueHeaderStyle
-                                }}
-                                key={index}>
-                                {queue.additionalParams.title}
-                                </div>
+                                <QueueHeader 
+                                    key={index}
+                                    style={{
+                                        height: queueStyle.height,
+                                        ...queueHeaderStyle
+                                    }}>
+                                    {queue.additionalParams.title}
+                                </QueueHeader> 
                             )
-                        })
-                    } </div>                  
+                        })}
+                    </QueueHeaderContainer>               
                     <div 
-                        className="gantt-view-gantt"
+                        className="gantt-view-container"
                         style={{
                         ...ganttStyle
                     }}

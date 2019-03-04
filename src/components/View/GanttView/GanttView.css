@@ -1,7 +1,7 @@
-.gantt-container {
+.gantt-view {
     height: 100%;
 }
-.gantt-view-gantt {
+.gantt-view-container {
     overflow-x: scroll;
     height: 100%;
     position: relative;

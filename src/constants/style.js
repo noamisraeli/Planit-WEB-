@@ -19,6 +19,7 @@ export const queueHeadersStyle = {
     height: "100%",
     backgroundColor: "#555",
     overflowX: "hidden",
+    color: "white"
 }
 
 export const queueHeaderStyle = {
