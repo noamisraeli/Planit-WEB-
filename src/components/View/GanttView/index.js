@@ -18,6 +18,7 @@ import QueueHeader from '../Queue/QueueHeader';
 import QueueContainer from '../Queue/QueueContainer';
 import Queue from '../Queue';
 import Job from '../Job';
+import { buildTitle } from '../../../utils/titleUtils';
 
 const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
@@ -128,13 +129,14 @@ class GanttView extends React.Component {
                                             ...queueStyle
                                         }}>
                                 \       {this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id}).map((job, index) => {
-                                            const initialTime = job.endTime;
+                                            let initialTime =  job.endTime;
                                             const position = getHourAsPixels(job.startTime, initialTime, this.props.hourAsPixel);
                                             const jobWidth = getHourAsPixels(job.endTime, job.startTime, this.props.hourAsPixel);
                                             const jobStyle = {
                                                 width: jobWidth,
                                                 marginLeft: position
                                             };
+                                            const jobTitle = buildTitle(job.startTime, job.endTime);
                                             job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor
                                             job.additionalParams.display = draggedJobID === job.id ? draggedJobStyle.display: jobStyle.display;
                                             return (
@@ -146,6 +148,7 @@ class GanttView extends React.Component {
                                                     dependencies={job.dependencies}
                                                     additionalParams={job.additionalParams}
                                                     style={jobStyle}
+                                                    title={jobTitle}
                                                 />)
                                         } )}
                                     </Queue>

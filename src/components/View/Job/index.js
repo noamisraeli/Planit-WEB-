@@ -69,14 +69,12 @@ class Job extends React.Component {
         })
     }
 
-    buildTitle = () => {
-        return START_TIME + ": " + this.props.startTime.toLocaleString() + "\n"  + END_TIME + ": " + this.props.endTime.toLocaleString()
-    }
+    
 
     renderGanttJob = () => {
         return (
             <div
-                title={this.buildTitle()}
+                title={this.props.title}
                 onDoubleClick={this.onModalOpen}
                 onClick={this.onClick}
                 onMouseDown={this.onDragStart}
