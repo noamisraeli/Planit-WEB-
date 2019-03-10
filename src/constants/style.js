@@ -7,9 +7,7 @@ export const splitterTitleHorizontal = "translate(-24px, -11px) rotate(90deg) sc
 export const splitterWidth = 20;
 
 export const queueStyle = {
-    padding: "6px 0",
     height: 40,
-    minWidth: "100%",
     borderBottom: "1px solid rgb(56, 54, 54)"
 }
 
@@ -52,9 +50,15 @@ export const draggedJobStyle = {
 
 export const jobStyle = {
     border: "1px solid black",
+    position: "absolute",
     borderRadius: "4px",
     boxShadow: "2px 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)",
-    cursor: "pointer"
+    cursor: "pointer",
+    marginTop: "auto",
+    marginBottom: "auto",
+    top: "0",
+    bottom: "0",
+    height: "80%"
 }
 export const operatorStyle = {
     padding: 3,

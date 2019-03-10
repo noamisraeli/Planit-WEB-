@@ -10,9 +10,9 @@ import {connect} from 'react-redux'
 import Notification from '../../Notification';
 import '../View.css';
 import '../GanttView/GanttView.css';
-import { getHourAsPixels, getPixelsAsHour } from '../../../utils/ganttUtils';
-import { queueStyle, queueHeaderStyle, queueHeadersStyle, queueContainerStyle, ganttNotificationStyle, draggedJobStyle, selectedJobStyle} from '../../../constants/style';
-import { JOB, GANTT_JOB} from '../../../constants/configurations/commonConfiguration';
+import { getHourAsPixels, getPixelsAsHour} from '../../../utils/ganttUtils';
+import { queueStyle, queueHeaderStyle, queueHeadersStyle, queueContainerStyle, ganttNotificationStyle, jobStyle, selectedJobStyle} from '../../../constants/style';
+import { GANTT_JOB } from '../../../constants/configurations/commonConfiguration';
 import QueueHeaderContainer from '../Queue/QueueHeaderContainer';
 import QueueHeader from '../Queue/QueueHeader';
 import QueueContainer from '../Queue/QueueContainer';
@@ -115,9 +115,7 @@ class GanttView extends React.Component {
                             onWheel={this.handleWheel}
                             ref="gantt">
                             {this.props.queues.map((queue, index) =>{
-                                const draggedJobID = this.props.draggedComponent.compType === JOB 
-                                                && this.props.draggedComponent.sourceViewId === this.props.id 
-                                                ? this.props.draggedComponent.id : null;
+                                
                                 const queueWidth = getHourAsPixels(this.props.endTime, this.props.startTime, this.props.hourAsPixel);
                                 return (
                                     <Queue
@@ -128,17 +126,17 @@ class GanttView extends React.Component {
                                             width: queueWidth,
                                             ...queueStyle
                                         }}>
-                                \       {this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id}).map((job, index) => {
-                                            let initialTime =  job.endTime;
-                                            const position = getHourAsPixels(job.startTime, initialTime, this.props.hourAsPixel);
+                                        {this.props.jobs.filter((job) => {return job.dependencies.jobQueue === queue.id}).map((job, index) => {
+                                            const position = getHourAsPixels(job.startTime, this.props.startTime, this.props.hourAsPixel);
                                             const jobWidth = getHourAsPixels(job.endTime, job.startTime, this.props.hourAsPixel);
-                                            const jobStyle = {
+                                            const bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor;                                            
+                                            const jobCurrentStyle = {
                                                 width: jobWidth,
-                                                marginLeft: position
+                                                transform: `translate3d(${position}px, 0, 0)`,
+                                                backgroundColor: bgColor,
+                                                ...jobStyle
                                             };
                                             const jobTitle = buildTitle(job.startTime, job.endTime);
-                                            job.additionalParams.bgColor = this.props.selectedJobs.includes(job.id) ? selectedJobStyle.backgroundColor : job.additionalParams.orderColor
-                                            job.additionalParams.display = draggedJobID === job.id ? draggedJobStyle.display: jobStyle.display;
                                             return (
                                                 <Job
                                                     type={GANTT_JOB}
@@ -147,7 +145,7 @@ class GanttView extends React.Component {
                                                     viewId={this.props.id}
                                                     dependencies={job.dependencies}
                                                     additionalParams={job.additionalParams}
-                                                    style={jobStyle}
+                                                    style={jobCurrentStyle}
                                                     title={jobTitle}
                                                 />)
                                         } )}

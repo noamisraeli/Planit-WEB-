@@ -51,11 +51,10 @@
 
 .queue {
     min-height: 30px;
-    padding: 6px 0;
     height: 40px;
     min-width: 100%;
     border: 1px solid rgb(56, 54, 54);
-
+    position: relative;
 }
 
 .queue-name {

@@ -4,6 +4,7 @@ import { JOB_DRAG_START, JOB_SELECT, OPEN_MODAL } from '../../../constants/actio
 import { START_TIME, GANTT_JOB, TABLE_JOB, END_TIME, JOB } from '../../../constants/configurations/commonConfiguration';
 import { PROPS_MODAL_TYPE, JOB_PROPS_TITLE, JOB_PROPS_WIDTH } from '../../../constants/configurations/modalConfiguration';
 import '../View.css';
+import GanttJob from './GanttJob';
 
 const mapDispatchToProps = dispatch => ({
     onDragStart: payload =>
@@ -73,23 +74,13 @@ class Job extends React.Component {
 
     renderGanttJob = () => {
         return (
-            <div
+            <GanttJob 
                 title={this.props.title}
                 onDoubleClick={this.onModalOpen}
-                onClick={this.onClick}
                 onMouseDown={this.onDragStart}
-                className="gantt-job-container"
+                onClick={this.onClick}
                 style={this.props.style}
-                >
-                <div className="gantt-job job"
-                    style={{
-                        backgroundColor: this.props.additionalParams.bgColor,
-                        display: this.props.additionalParams.display,
-                    }}
-                    id={this.props.id}
-                    >
-                </div>
-            </div>
+                />
         )
     }
 
