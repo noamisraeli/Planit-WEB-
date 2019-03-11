@@ -18,7 +18,7 @@ import QueueHeader from '../Queue/QueueHeader';
 import QueueContainer from '../Queue/QueueContainer';
 import Queue from '../Queue';
 import Job from '../Job';
-import { buildTitle } from '../../../utils/titleUtils';
+import View from '../../../utils/titleUtils';
 
 const mapStateToProps = (state, ownProps) => ({
     startTimeView: state.workspace.views[ownProps.index].startTimeView,
@@ -136,7 +136,8 @@ class GanttView extends React.Component {
                                                 backgroundColor: bgColor,
                                                 ...jobStyle
                                             };
-                                            const jobTitle = buildTitle(job.startTime, job.endTime);
+                                            const expandProps = View.buildJobExpandProps(job.additionalParams,job.startTime, job.endTime)
+                                            const jobTitle = View.buildJobTitle(job.startTime, job.endTime);
                                             return (
                                                 <Job
                                                     type={GANTT_JOB}
@@ -147,6 +148,7 @@ class GanttView extends React.Component {
                                                     additionalParams={job.additionalParams}
                                                     style={jobCurrentStyle}
                                                     title={jobTitle}
+                                                    expandProps={expandProps}
                                                 />)
                                         } )}
                                     </Queue>

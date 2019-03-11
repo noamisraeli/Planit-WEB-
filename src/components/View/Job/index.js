@@ -57,10 +57,7 @@ class Job extends React.Component {
     }
 
     onModalOpen = () => {
-        const content = Object.assign(this.props.additionalParams, {
-            startTime: this.props.startTime.toLocaleString(),
-            endTime: this.props.endTime.toLocaleString()
-        });
+        const content = this.props.expandProps;
         this.props.openModal({
             content: content,
             type: PROPS_MODAL_TYPE,
